@@ -1,7 +1,8 @@
 <script setup>
 
 import WebcamScreen from './WebcamScreen.vue';
-// import { gsap } from 'gsap';
+import ResScreen from './ResScreen.vue';
+import { gsap } from 'gsap';
 
 const props = defineProps({
   selectedFig: Number
@@ -17,6 +18,8 @@ function select(n) {
   let choiceScreen = document.querySelector(".choice-screen");
   webcamScreen.style.display = "block";
   choiceScreen.style.display = "none";
+
+  //gsap.from(webcamScreen, {x:300, opacity:0, duration:1})
 }
 
 function back() {
@@ -24,6 +27,9 @@ function back() {
   let choiceScreen = document.querySelector(".choice-screen");
   webcamScreen.style.display = "none";
   choiceScreen.style.display = "block";
+  
+  // gsap.from(choiceScreen, {x:-300, opacity:0, duration:1})
+
 }
 
 </script>
@@ -49,6 +55,7 @@ function back() {
       </div>
     </div>
   </div>
+  <p>Paragraphe explicatif sur l'utilisation de l'IA et le droit à l'image. <br></br>Musée Figurine de Compiègne</p>
 
 </template>
 
@@ -56,6 +63,11 @@ function back() {
 <style scoped>
 
 h1 {
+  text-align: center;
+}
+
+p {
+  padding: 100px;
   text-align: center;
 }
 

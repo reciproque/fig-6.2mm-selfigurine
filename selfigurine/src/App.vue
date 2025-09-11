@@ -2,7 +2,7 @@
 
 import { ref } from 'vue'
 import ChoiceScreen from './ChoiceScreen.vue'
-import WebcamScreen from './WebcamScreen.vue'
+import Footer from './Footer.vue'
 
 </script>
 
@@ -10,6 +10,7 @@ import WebcamScreen from './WebcamScreen.vue'
 <template>
 
   <ChoiceScreen v-model:selectedFig="maFig"></ChoiceScreen>
+  <Footer></Footer>
 
 </template>
 
@@ -27,5 +28,15 @@ body {
   height: 100vh !important;
   width: auto !important;
 }
+
+
+.res-photo-image  {
+  position: absolute;
+  z-index: 10;
+  top:0;
+  left:0;
+}
+
+
 
 </style>
