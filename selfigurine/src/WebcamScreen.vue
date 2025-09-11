@@ -1,18 +1,25 @@
 <template>
+
   <div>
     <div class="camera-wrapper">
-      <camera :resolution="{ width: 3840, height: 1920 }" ref="camera" autoplay />
-    </div>
-    <button class="take-photo-button" @click="snapshot"></button>
 
-    <!-- Show captured snapshot -->
+      <div class="video-wrapper">
+        <camera :resolution="{ width: 1920*2, height: 1080*2 }" ref="camera" autoplay />
+      </div>
+      <img src="../assets/prendre-photo.png" alt="" class="web-cam-overlay">
+      <button class="take-photo-button" @click="snapshot"></button>
+      <button class="back-button" @click="$emit('back-to-choice')"><</button>
+    </div>
+
     <div v-if="snapshotUrl" class="mt-4">
       <img :src="snapshotUrl" alt="Snapshot" class="w-48 border rounded" />
     </div>
   </div>
+
 </template>
 
 <script lang="ts">
+
 import { defineComponent, ref } from "vue";
 import Camera from "simple-vue-camera";
 
@@ -28,15 +35,13 @@ export default defineComponent({
       const blob = await camera.value.snapshot();
       const img = await createImageBitmap(blob);
 
-      // Desired crop size
       const targetWidth = 1080;
       const targetHeight = 1920;
 
-      // Calculate centered crop rectangle
+      // TODO : regarder pourquoi semble déformé (fenêtre pas vraiment 1080x1920 ou canvas ?)
       const startX = Math.max(0, (img.width - targetWidth) / 2);
       const startY = Math.max(0, (img.height - targetHeight) / 2);
 
-      // Create a canvas for cropping
       const canvas = document.createElement("canvas");
       canvas.width = targetWidth;
       canvas.height = targetHeight;
@@ -45,19 +50,17 @@ export default defineComponent({
 
       ctx.drawImage(
         img,
-        startX, startY, targetWidth, targetHeight, // source (crop area)
-        0, 0, targetWidth, targetHeight            // destination
+        startX, startY, targetWidth, targetHeight,
+        0, 0, targetWidth, targetHeight            
       );
 
-      // Convert canvas back to blob
       canvas.toBlob((croppedBlob) => {
         if (!croppedBlob) return;
         const url = URL.createObjectURL(croppedBlob);
 
-        // Trigger download
         const link = document.createElement("a");
         link.href = url;
-        link.download = "snapshot-cropped.png";
+        link.download = "photo.png";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -65,7 +68,6 @@ export default defineComponent({
         URL.revokeObjectURL(url);
       }, "image/png");
     };
-
 
     return {
       camera,
@@ -77,22 +79,54 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
 .camera-wrapper {
-  scale: 4.8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-wrapper {
+  object-fit: cover;
 }
 
 .take-photo-button {
   position: absolute;
-  z-index: 10;
+  bottom: 8vh;
   background-color: white;
   border: solid black 5px;
   box-shadow: 0px 0px 0px 6px white;
 
   font-size: 2rem;
-  bottom: 50px;
-  left: 490px;
+
   border-radius: 50px;
   width: 100px;
   height: 100px;
+
+  cursor: pointer;
 }
+
+.back-button {
+    position: absolute;
+    top: 4vh;
+    left: 4vw;
+    background-color: white;
+    border: 0;
+
+    font-size: 2rem;
+
+    border-radius: 20px;
+    width: 80px;
+    height: 80px;
+
+    cursor: pointer;
+}
+
+  .web-cam-overlay {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+  }
+
 </style>
