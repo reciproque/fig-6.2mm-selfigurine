@@ -11,7 +11,7 @@
       <button class="take-photo-button" @click="takePhoto"></button>
       <button class="back-button" @click="$emit('back-to-choice')"><</button>
 
-      <button class="yes-button" @click="validation">✅</button>
+      <button class="yes-button" @click="$emit('validation')">✅</button>
       <button class="no-button" @click="retakePhoto">X</button>
 
 
@@ -20,8 +20,6 @@
     <div v-if="snapshotUrl" class="mt-4">
       <img :src="snapshotUrl" alt="Snapshot" class="w-48 border rounded" />
     </div>
-
-    <ResScreen class="res-screen"></ResScreen>
 
   </div>
 
@@ -39,7 +37,8 @@ export default defineComponent({
   setup() {
     const camera = ref<InstanceType<typeof Camera> | null>(null);
     const snapshotUrl = ref<string | null>(null);
-
+    const showResScreen = ref(false);
+    
     const snapshot = async () => {
       if (!camera.value) return;
 
@@ -129,19 +128,9 @@ export default defineComponent({
         document.querySelector(".timer").innerHTML = String(n);
     }
 
-    const validation = async () => {
-      console.log("validation");
-      const el = document.querySelector<HTMLElement>(".res-screen");
-      if (el) {
-        el.style.display = "block";
-      } else {
-        console.warn("⚠️ .res-screen introuvable !");
-      }
-    };
-
 
     return {
-      camera, validation,
+      camera,
       retakePhoto,
       takePhoto,
       snapshot,
@@ -254,8 +243,5 @@ button {
   cursor: pointer;
 }
 
-.res-screen {
-  display: none;
-}
 
 </style>

@@ -32,11 +32,21 @@ function back() {
 
 }
 
+function forward() {
+  let webcamScreen = document.querySelector(".webcam-screen");
+  let resScreen = document.querySelector(".res-screen");
+  webcamScreen.style.display = "none";
+  resScreen.style.display = "flex";
+  document.querySelector(".res-photo-image").remove();
+
+}
+
 </script>
 
 <template>
 
-  <WebcamScreen class="webcam-screen" @back-to-choice="back"></WebcamScreen>
+  <WebcamScreen class="webcam-screen" @back-to-choice="back" @validation="forward"></WebcamScreen>
+  <ResScreen class="res-screen"></ResScreen>
 
   <div class="choice-screen">
     <h1>Choix image</h1>
