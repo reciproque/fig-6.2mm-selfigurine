@@ -52,16 +52,16 @@ function forward() {
     <h1>Choix image</h1>
     <div class="grille-choix">
       <div class="choix" @click="select(1)">
-        <img src="/assets/images/figurines/fig1.jpg" alt="">
+        <img src="/assets/fig1.jpg" alt="">
       </div>
       <div class="choix" @click="select(2)">
-        <img src="/assets/images/figurines/fig2.jpg" alt="">
+        <img src="/assets/fig2.jpg" alt="">
       </div>
       <div class="choix" @click="select(3)">
-        <img src="/assets/images/figurines/fig3.jpg" alt="">
+        <img src="/assets/fig3.jpg" alt="">
       </div>
       <div class="choix" @click="select(4)">
-        <img src="/assets/images/figurines/fig4.jpg" alt="">
+        <img src="/assets/fig4.jpg" alt="">
       </div>
     </div>
   </div>
