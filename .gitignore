@@ -1,3 +1,4 @@
 ﻿node_modules
 .vscode
 selfigurine/.vscode
+*.DS_Store
