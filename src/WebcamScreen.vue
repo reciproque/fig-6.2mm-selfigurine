@@ -57,11 +57,16 @@ export default defineComponent({
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+
       ctx.drawImage(
         img,
         startX, startY, targetWidth, targetHeight,
         0, 0, targetWidth, targetHeight            
       );
+
+
 
       canvas.toBlob((croppedBlob) => {
         if (!croppedBlob) return;
@@ -145,6 +150,7 @@ export default defineComponent({
 <style scoped>
 
 .camera-wrapper {
+  
   display: flex;
   flex-direction: column;
   justify-content: center;

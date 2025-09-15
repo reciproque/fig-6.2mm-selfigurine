@@ -27,6 +27,7 @@ body {
 #video {
   height: 100vh !important;
   width: auto !important;
+  transform: scaleX(-1);
 }
 
 
