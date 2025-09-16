@@ -87,8 +87,8 @@ export default defineComponent({
         image.src = url;
         document.querySelector("html").prepend(image);
 
-        document.querySelector(".yes-button").style.display = "block";
-        document.querySelector(".no-button").style.display = "block";
+        (document.querySelector(".yes-button") as HTMLElement).style.display = "block";
+        (document.querySelector(".no-button") as HTMLElement).style.display = "block";
 
         const count = await incrementCompteur();
 
@@ -102,7 +102,7 @@ export default defineComponent({
         URL.revokeObjectURL(url);
       }, "image/png");
 
-      document.querySelector(".timer").style.display = "none";
+      (document.querySelector(".timer") as HTMLElement).style.display = "none";
 
     };
     
@@ -111,22 +111,22 @@ export default defineComponent({
     clearInterval(myInterval);
 
     const takePhoto = async()=> {
-      document.querySelector(".take-photo-button").style.display = "none";
-      document.querySelector(".back-button").style.display = "none";
+      (document.querySelector(".take-photo-button") as HTMLElement).style.display = "none";
+      (document.querySelector(".back-button") as HTMLElement).style.display = "none";
 
-      document.querySelector(".timer").style.display = "block";
+      (document.querySelector(".timer") as HTMLElement).style.display = "block";
       setTimeout(snapshot, 3000);
       myInterval = setInterval(decompte, 1000);
 
     }
 
     const retakePhoto = async()=> {
-      document.querySelector(".take-photo-button").style.display = "block";
-      document.querySelector(".back-button").style.display = "block";
+      (document.querySelector(".take-photo-button") as HTMLElement).style.display = "block";
+      (document.querySelector(".back-button") as HTMLElement).style.display = "block";
       document.querySelector(".res-photo-image").remove();
 
-      document.querySelector(".yes-button").style.display = "none";
-      document.querySelector(".no-button").style.display = "none";
+      (document.querySelector(".yes-button") as HTMLElement).style.display = "none";
+      (document.querySelector(".no-button") as HTMLElement).style.display = "none";
     }
 
 
