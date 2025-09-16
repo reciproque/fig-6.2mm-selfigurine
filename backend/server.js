@@ -17,54 +17,54 @@ app.use(cors());
 const compteurPath = path.join(__dirname, 'photos/photo-count.txt');
 
 app.post('/run', (req, res) => {
-    const {
-        source,
-        output,
-        mask,
-        harmonized,
-        final
-    } = req.body;
+  const {
+    source,
+    output,
+    mask,
+    harmonized,
+    final
+  } = req.body;
 
-    if (!source || !output || !mask || !harmonized || !final) {
-        return res.status(400).send('Tous les paramètres sont requis');
+  if (!source || !output || !mask || !harmonized || !final) {
+    return res.status(400).send('Tous les paramètres sont requis');
+  }
+
+  const batchFile = path.join(__dirname, 'launch.bat');
+
+  const args = [
+    source,
+    output,
+    mask,
+    harmonized,
+    final
+  ];
+
+  execFile(batchFile, args, { shell: true }, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Erreur batch : ${error.message}`);
+      return res.status(500).send(`Erreur : ${error.message}`);
     }
 
-    const batchFile = path.join(__dirname, 'launch.bat');
+    if (stderr) {
+      console.error(`stderr : ${stderr}`);
+    }
 
-    const args = [
-        source,
-        output,
-        mask,
-        harmonized,
-        final
-    ];
+    console.log(`stdout : ${stdout}`);
 
-    execFile(batchFile, args, { shell: true }, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Erreur batch : ${error.message}`);
-            return res.status(500).send(`Erreur : ${error.message}`);
-        }
-
-        if (stderr) {
-            console.error(`stderr : ${stderr}`);
-        }
-
-        console.log(`stdout : ${stdout}`);
-
-        if (stdout.includes('All done.')) {
-            res.status(200).json({
-                success: true,
-                message: 'Batch terminé avec succès',
-                finalImagePath: final 
-            });
-        } else {
-            res.status(200).json({
-                success: false,
-                message: 'Batch terminé, mais pas de confirmation "All done."',
-                rawOutput: stdout
-            });
-        }
-    });
+    if (stdout.includes('All done.')) {
+      res.status(200).json({
+        success: true,
+        message: 'Batch terminé avec succès',
+        finalImagePath: final
+      });
+    } else {
+      res.status(200).json({
+        success: false,
+        message: 'Batch terminé, mais pas de confirmation "All done."',
+        rawOutput: stdout
+      });
+    }
+  });
 });
 
 
@@ -92,5 +92,5 @@ app.post('/compteur/increment', async (req, res) => {
 
 
 app.listen(PORT, () => {
-    console.log(`Serveur lancé sur http://localhost:${PORT}`);
+  console.log(`Serveur lancé sur http://localhost:${PORT}`);
 });
