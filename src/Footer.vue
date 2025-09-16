@@ -6,7 +6,7 @@
 .footer {
     position: absolute;
     bottom: 0;
-    background-color: antiquewhite;
+    background-color: white;
     width: 100vw;
     padding: 30px 0px;
     text-align: center;

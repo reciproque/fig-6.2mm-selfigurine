@@ -5,16 +5,10 @@ import ResScreen from './ResScreen.vue';
 import { gsap } from 'gsap';
 import { ref } from 'vue';
 import Footer from './Footer.vue'
-// const props = defineProps({
-//   selectedFig: Number
-// })
-
-// const emit = defineEmits(["update:selectedFig"])
 
 let selectedFig = 1;
 
 function select(n) {
-  // emit("update:selectedFig", n)
 
   selectedFig = n;
 
@@ -22,6 +16,7 @@ function select(n) {
   let choiceScreen = document.querySelector(".choice-screen");
   webcamScreen.style.display = "block";
   choiceScreen.style.display = "none";
+
   //gsap.from(webcamScreen, {x:300, opacity:0, duration:1})
 
   console.log(selectedFig);
@@ -32,7 +27,7 @@ function back() {
   let choiceScreen = document.querySelector(".choice-screen");
   webcamScreen.style.display = "none";
   choiceScreen.style.display = "block";
-  
+
   // gsap.from(choiceScreen, {x:-300, opacity:0, duration:1})
 
 }
@@ -54,17 +49,16 @@ async function runBatch(selectedFig) {
       method: 'POST',
     });
     const data = await res.json();
-    const count = data.count -1;
-
+    const count = data.count - 1;
     const source_path = `../backend/photos/photo_${count}.png`;
     const output_path = `../backend/figurines/fig${selectedFig}.png`;
     const mask_path = `../backend/figurines/fig${selectedFig}-mask.png`;
     const harmonized_path = `../backend/harmonized/harmonized_${count}.png`;
     const final_path = `../backend/final/final_${count}.png`;
 
-    const body = {source: source_path, output: output_path, mask: mask_path, harmonized: harmonized_path, final: final_path };
+    const body = { source: source_path, output: output_path, mask: mask_path, harmonized: harmonized_path, final: final_path };
     console.log(body);
-    
+
     const runRes = await fetch('http://localhost:3000/run', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -83,7 +77,8 @@ const finalImageUrl = ref(null);
 
 function showRes(count) {
   console.log("lets show")
-    finalImageUrl.value = `../backend/final/final_${count}.png`;}
+  finalImageUrl.value = `../backend/final/final_${count}.png`;
+}
 
 </script>
 
@@ -117,7 +112,6 @@ function showRes(count) {
 
 
 <style scoped>
-
 h1 {
   text-align: center;
 }
@@ -154,6 +148,4 @@ p {
 .webcam-screen {
   display: none;
 }
-
-
 </style>

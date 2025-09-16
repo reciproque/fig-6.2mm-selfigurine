@@ -15,7 +15,6 @@ import ChoiceScreen from './ChoiceScreen.vue'
 </template>
 
 <style>
-
 html {
   overflow: hidden;
 }
@@ -31,12 +30,10 @@ body {
 }
 
 
-.res-photo-image  {
+.res-photo-image {
   position: absolute;
   z-index: 10;
-  top:0;
-  left:0;
-  height: 1890px;
+  top: 0;
+  left: 0;
 }
-
 </style>
