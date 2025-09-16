@@ -4,21 +4,26 @@ import WebcamScreen from './WebcamScreen.vue';
 import ResScreen from './ResScreen.vue';
 import { gsap } from 'gsap';
 
-const props = defineProps({
-  selectedFig: Number
-})
+// const props = defineProps({
+//   selectedFig: Number
+// })
 
-const emit = defineEmits(["update:selectedFig"])
+// const emit = defineEmits(["update:selectedFig"])
 
+let selectedFig = 1;
 
 function select(n) {
-  emit("update:selectedFig", n)
+  // emit("update:selectedFig", n)
+
+  selectedFig = n;
+
   let webcamScreen = document.querySelector(".webcam-screen");
   let choiceScreen = document.querySelector(".choice-screen");
   webcamScreen.style.display = "block";
   choiceScreen.style.display = "none";
-
   //gsap.from(webcamScreen, {x:300, opacity:0, duration:1})
+
+  console.log(selectedFig);
 }
 
 function back() {
@@ -31,20 +36,52 @@ function back() {
 
 }
 
-function forward() {
+function forward(selectedFig) {
   let webcamScreen = document.querySelector(".webcam-screen");
   let resScreen = document.querySelector(".res-screen");
   webcamScreen.style.display = "none";
   resScreen.style.display = "flex";
   document.querySelector(".res-photo-image").remove();
 
+  runBatch(selectedFig);
+
+}
+
+async function runBatch(selectedFig) {
+  try {
+    const res = await fetch('http://localhost:3000/compteur/increment', {
+      method: 'POST',
+    });
+    const data = await res.json();
+    const count = data.count -1;
+
+    const source_path = `../backend/photos/photo_${count}.png`;
+    const output_path = `../backend/figurines/fig${selectedFig}.png`;
+    const mask_path = `../backend/figurines/fig${selectedFig}-mask.png`;
+    const harmonized_path = `../backend/harmonized/harmonized_${count}.png`;
+    const final_path = `../backend/final/final_${count}.png`;
+
+    const body = {source: source_path, output: output_path, mask: mask_path, harmonized: harmonized_path, final: final_path };
+    console.log(body);
+    const runRes = await fetch('http://localhost:3000/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    const text = await runRes.text();
+    console.log('Batch exécuté :', text);
+
+  } catch (err) {
+    console.error('Erreur dans runBatch:', err);
+  }
 }
 
 </script>
 
 <template>
 
-  <WebcamScreen class="webcam-screen" @back-to-choice="back" @validation="forward"></WebcamScreen>
+  <WebcamScreen class="webcam-screen" @back-to-choice="back" @validation="() => forward(selectedFig)"></WebcamScreen>
   <ResScreen class="res-screen"></ResScreen>
 
   <div class="choice-screen">
