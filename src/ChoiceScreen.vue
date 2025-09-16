@@ -13,7 +13,6 @@ const emit = defineEmits(["update:selectedFig"])
 
 function select(n) {
   emit("update:selectedFig", n)
-  console.log("Fig choisie :", n)
   let webcamScreen = document.querySelector(".webcam-screen");
   let choiceScreen = document.querySelector(".choice-screen");
   webcamScreen.style.display = "block";
@@ -52,16 +51,16 @@ function forward() {
     <h1>Choix image</h1>
     <div class="grille-choix">
       <div class="choix" @click="select(1)">
-        <img src="/assets/fig1.jpg" alt="">
+        <img src="/assets/fig1.png" alt="">
       </div>
       <div class="choix" @click="select(2)">
-        <img src="/assets/fig2.jpg" alt="">
+        <img src="/assets/fig2.png" alt="">
       </div>
       <div class="choix" @click="select(3)">
-        <img src="/assets/fig3.jpg" alt="">
+        <img src="/assets/fig3.png" alt="">
       </div>
       <div class="choix" @click="select(4)">
-        <img src="/assets/fig4.jpg" alt="">
+        <img src="/assets/fig4.png" alt="">
       </div>
     </div>
   </div>
@@ -108,5 +107,6 @@ p {
 .webcam-screen {
   display: none;
 }
+
 
 </style>

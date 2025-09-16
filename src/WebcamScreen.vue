@@ -39,6 +39,18 @@ export default defineComponent({
     const snapshotUrl = ref<string | null>(null);
     const showResScreen = ref(false);
     
+    const incrementCompteur = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/compteur/increment", {
+          method: "POST",
+        });
+        const data = await res.json();
+        return data.count;
+      } catch (err) {
+        console.error("Erreur lors de l'incrémentation :", err);
+      }
+    };
+    
     const snapshot = async () => {
       if (!camera.value) return;
 
@@ -66,23 +78,23 @@ export default defineComponent({
         0, 0, targetWidth, targetHeight            
       );
 
-
-
-      canvas.toBlob((croppedBlob) => {
+      canvas.toBlob(async (croppedBlob) => {
         if (!croppedBlob) return;
         const url = URL.createObjectURL(croppedBlob);
-        console.log(url);
+
         const image = document.createElement("img");
         image.className = "res-photo-image";
-        image.src =  url;
+        image.src = url;
         document.querySelector("html").prepend(image);
 
         document.querySelector(".yes-button").style.display = "block";
         document.querySelector(".no-button").style.display = "block";
 
+        const count = await incrementCompteur();
+
         const link = document.createElement("a");
         link.href = url;
-        link.download = "photo.png";
+        link.download = `photo_${count ?? 'x'}.png`; 
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -91,8 +103,6 @@ export default defineComponent({
       }, "image/png");
 
       document.querySelector(".timer").style.display = "none";
-      // document.querySelector(".take-photo-button").style.display = "block";
-      // document.querySelector(".back-button").style.display = "block";
 
     };
     
@@ -100,12 +110,10 @@ export default defineComponent({
     let myInterval = setInterval(decompte, 1000);
     clearInterval(myInterval);
 
-
     const takePhoto = async()=> {
       document.querySelector(".take-photo-button").style.display = "none";
       document.querySelector(".back-button").style.display = "none";
 
-      console.log("takephoto");
       document.querySelector(".timer").style.display = "block";
       setTimeout(snapshot, 3000);
       myInterval = setInterval(decompte, 1000);
@@ -150,7 +158,6 @@ export default defineComponent({
 <style scoped>
 
 .camera-wrapper {
-  
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -162,8 +169,7 @@ export default defineComponent({
 }
 
 button {
-    z-index: 20;
-
+  z-index: 20;
 }
 
 .take-photo-button {
@@ -211,7 +217,7 @@ button {
   font-size: 15rem;
   color: white;
   top: 5vh;
-  }
+}
 
 .yes-button {
   display: none;

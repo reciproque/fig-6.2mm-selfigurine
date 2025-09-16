@@ -1,64 +1,82 @@
-// server.js (version ESM)
-import express from "express";
-import multer from "multer";
-import { spawn } from "child_process";
-import path from "path";
-import fs from "fs";
-import { fileURLToPath } from "url";
 
-// Fix pour __dirname en ESM
+import fs from 'fs/promises';
+import path from 'path';
+import express from 'express';
+import cors from 'cors';
+import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+import { execFile } from 'child_process';
 
 const app = express();
 const PORT = 3000;
 
-// Dossiers
-const UPLOADS_DIR = path.join(__dirname, "uploads");
-const GENERATED_DIR = path.join(__dirname, "generated");
+app.use(express.json());
+app.use(cors());
 
-if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR);
-if (!fs.existsSync(GENERATED_DIR)) fs.mkdirSync(GENERATED_DIR);
+const compteurPath = path.join(__dirname, 'photos/photo-count.txt');
 
-// Middleware upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, UPLOADS_DIR),
-  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
-});
-const upload = multer({ storage });
+app.post('/run', (req, res) => {
+    const {
+        source,
+        output,
+        mask,
+        harmonized,
+        final
+    } = req.body;
 
-// Endpoint POST
-app.post("/generate", upload.single("image"), (req, res) => {
-  const { number } = req.body;
-  const uploadedImagePath = req.file.path;
-
-  if (!number || !req.file) {
-    return res.status(400).json({ error: "Chiffre et image obligatoires." });
-  }
-
-  const outputFileName = `gen-${Date.now()}.png`;
-  const outputPath = path.join(GENERATED_DIR, outputFileName);
-
-  // Lancer script Python
-  const python = spawn("python3", ["script.py", number, uploadedImagePath, outputPath]);
-
-  python.stdout.on("data", (data) => console.log(`stdout: ${data}`));
-  python.stderr.on("data", (data) => console.error(`stderr: ${data}`));
-
-  python.on("close", (code) => {
-    if (code !== 0) {
-      return res.status(500).json({ error: "Erreur du script Python." });
+    if (!source || !output || !mask || !harmonized || !final) {
+        return res.status(400).send('Tous les paramètres sont requis');
     }
-    res.json({
-      status: "OK",
-      imageUrl: `/generated/${outputFileName}`,
+
+    const batchFile = path.join(__dirname, 'launch.bat');
+
+    const args = [
+        source,
+        output,
+        mask,
+        harmonized,
+        final
+    ];
+
+    execFile(batchFile, args, { shell: true }, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Erreur batch : ${error.message}`);
+            return res.status(500).send(`Erreur : ${error.message}`);
+        }
+
+        if (stderr) {
+            console.error(`stderr : ${stderr}`);
+        }
+
+        console.log(`stdout : ${stdout}`);
+        res.send(`Batch exécuté avec succès. Sortie :\n${stdout}`);
     });
-  });
 });
 
-// Servir images générées
-app.use("/generated", express.static(GENERATED_DIR));
+app.get('/compteur', async (req, res) => {
+  try {
+    const data = await fs.readFile(compteurPath, 'utf8');
+    const count = parseInt(data, 10) || 0;
+    res.json({ count });
+  } catch (err) {
+    res.status(500).json({ error: 'Impossible de lire le compteur.' });
+  }
+});
+
+app.post('/compteur/increment', async (req, res) => {
+  try {
+    const data = await fs.readFile(compteurPath, 'utf8');
+    const count = parseInt(data, 10) || 0;
+    const newCount = count + 1;
+    await fs.writeFile(compteurPath, String(newCount), 'utf8');
+    res.json({ count: newCount });
+  } catch (err) {
+    res.status(500).json({ error: 'Impossible de mettre à jour le compteur.' });
+  }
+});
+
 
 app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
+    console.log(`Serveur lancé sur http://localhost:${PORT}`);
 });
