@@ -50,9 +50,23 @@ app.post('/run', (req, res) => {
         }
 
         console.log(`stdout : ${stdout}`);
-        res.send(`Batch exécuté avec succès. Sortie :\n${stdout}`);
+
+        if (stdout.includes('All done.')) {
+            res.status(200).json({
+                success: true,
+                message: 'Batch terminé avec succès',
+                finalImagePath: final 
+            });
+        } else {
+            res.status(200).json({
+                success: false,
+                message: 'Batch terminé, mais pas de confirmation "All done."',
+                rawOutput: stdout
+            });
+        }
     });
 });
+
 
 app.get('/compteur', async (req, res) => {
   try {

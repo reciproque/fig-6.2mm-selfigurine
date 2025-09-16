@@ -2,7 +2,7 @@
 
 import { ref } from 'vue'
 import ChoiceScreen from './ChoiceScreen.vue'
-import Footer from './Footer.vue'
+
 
 </script>
 
@@ -10,7 +10,7 @@ import Footer from './Footer.vue'
 <template>
 
   <ChoiceScreen v-model:selectedFig="maFig"></ChoiceScreen>
-  <Footer></Footer>
+
 
 </template>
 

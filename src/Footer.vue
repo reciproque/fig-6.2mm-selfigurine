@@ -9,7 +9,7 @@
     background-color: antiquewhite;
     width: 100vw;
     padding: 30px 0px;
-    z-index: 100;
     text-align: center;
+    z-index: -1
 }
 </style>

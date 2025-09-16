@@ -3,7 +3,8 @@
 import WebcamScreen from './WebcamScreen.vue';
 import ResScreen from './ResScreen.vue';
 import { gsap } from 'gsap';
-
+import { ref } from 'vue';
+import Footer from './Footer.vue'
 // const props = defineProps({
 //   selectedFig: Number
 // })
@@ -63,13 +64,14 @@ async function runBatch(selectedFig) {
 
     const body = {source: source_path, output: output_path, mask: mask_path, harmonized: harmonized_path, final: final_path };
     console.log(body);
+    
     const runRes = await fetch('http://localhost:3000/run', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     });
 
-    const text = await runRes.text();
+    const text = await runRes.text().then(() => showRes(count));
     console.log('Batch exécuté :', text);
 
   } catch (err) {
@@ -77,12 +79,18 @@ async function runBatch(selectedFig) {
   }
 }
 
+const finalImageUrl = ref(null);
+
+function showRes(count) {
+  console.log("lets show")
+    finalImageUrl.value = `../backend/final/final_${count}.png`;}
+
 </script>
 
 <template>
 
   <WebcamScreen class="webcam-screen" @back-to-choice="back" @validation="() => forward(selectedFig)"></WebcamScreen>
-  <ResScreen class="res-screen"></ResScreen>
+  <ResScreen :finalImageUrl="finalImageUrl" class="res-screen"></ResScreen>
 
   <div class="choice-screen">
     <h1>Choix image</h1>
@@ -102,6 +110,8 @@ async function runBatch(selectedFig) {
     </div>
   </div>
   <p>Paragraphe explicatif sur l'utilisation de l'IA et le droit à l'image. <br></br>Musée Figurine de Compiègne</p>
+
+  <Footer></Footer>
 
 </template>
 
