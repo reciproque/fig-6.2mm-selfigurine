@@ -18,6 +18,8 @@ cd src/backend
 npm install
 ```
 
+3. TODO : Documentation installation roop et dépendances Python
+
 ## Lancement manuel de l’application
 
 1. La commande suivante démarre le backend + le frontend. À la racine (selfigurine) :
