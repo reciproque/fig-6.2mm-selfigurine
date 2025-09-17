@@ -7,9 +7,11 @@ set "MASK=%3"
 set "HARMONIZED=%4"
 set "FINAL=%5"
 
+cd /d %~dp0
+
 REM === Lancer le premier script avec Python global ou virtualenv déjà activé ===
 echo Running recol.py...
-python recol.py -p "%SOURCE%" -f "%OUTPUT%" -m "%MASK%" -s "%HARMONIZED%"
+python recol.py -p "%~dp0%SOURCE%" -f "%~dp0%OUTPUT%" -m "%~dp0%MASK%" -s "%~dp0%HARMONIZED%"
 if %errorlevel% neq 0 (
     echo recol.py failed. Aborting.
     exit /b %errorlevel%
@@ -35,7 +37,7 @@ if %errorlevel% neq 0 (
 
 REM === Lancer le second script dans le venv ===
 echo Running run.py...
-python roop/run.py -s "%SOURCE%" -t "%HARMONIZED%" -o "%FINAL%"
+python roop/run.py -s "%~dp0%SOURCE%" -t "%~dp0%HARMONIZED%" -o "%~dp0%FINAL%"
 if %errorlevel% neq 0 (
     echo run.py failed.
     exit /b %errorlevel%

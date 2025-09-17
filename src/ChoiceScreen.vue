@@ -50,11 +50,11 @@ async function runBatch(selectedFig) {
     });
     const data = await res.json();
     const count = data.count - 1;
-    const source_path = `../backend/photos/photo_${count}.png`;
-    const output_path = `../backend/figurines/fig${selectedFig}.png`;
-    const mask_path = `../backend/figurines/fig${selectedFig}-mask.png`;
-    const harmonized_path = `../backend/harmonized/harmonized_${count}.png`;
-    const final_path = `../backend/final/final_${count}.png`;
+    const source_path = `photos/photo_${count}.png`;
+    const output_path = `figurines/fig${selectedFig}.png`;
+    const mask_path = `figurines/fig${selectedFig}-mask.png`;
+    const harmonized_path = `harmonized/harmonized_${count}.png`;
+    const final_path = `final/final_${count}.png`;
 
     const body = { source: source_path, output: output_path, mask: mask_path, harmonized: harmonized_path, final: final_path };
     console.log(body);
@@ -77,7 +77,7 @@ const finalImageUrl = ref(null);
 
 function showRes(count) {
   console.log("lets show")
-  finalImageUrl.value = `../backend/final/final_${count}.png`;
+  finalImageUrl.value = `backend/final/final_${count}.png`;
 }
 
 </script>

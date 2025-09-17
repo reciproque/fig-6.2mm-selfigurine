@@ -8,7 +8,7 @@ parser.add_argument("-p", "--photo", required=True, help="Path to the source ima
 parser.add_argument("-f", "--fig", required=True, help="Path to the figurine image to be harmonized.")
 parser.add_argument("-m", "--mask", required=True, help="Path to the grayscale mask image.")
 parser.add_argument("-s", "--save_path", required=True, help="Path to save the harmonized image.")
-parser.add_argument("-b", "--blend_strength", type=float, default=0.5, help="Blending strength between 0 and 1 (default: 0.5)")
+parser.add_argument("-b", "--blend_strength", type=float, default=0.1, help="Blending strength between 0 and 1 (default: 0.5)")
 
 args = parser.parse_args()
 
