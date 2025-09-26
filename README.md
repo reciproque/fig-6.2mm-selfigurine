@@ -12,7 +12,7 @@ npm install
 ```
 Une fois pour le back :
 ```
-cd src/backend
+cd backend
 ```
 ```
 npm install
