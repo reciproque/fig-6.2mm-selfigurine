@@ -21,11 +21,11 @@ app.post('/run', (req, res) => {
     source,
     output,
     mask,
-    harmonized,
+    harmonized, //TODO : enlever harmonized ?
     final
   } = req.body;
 
-  if (!source || !output || !mask || !harmonized || !final) {
+  if (!source || !output || !mask || !harmonized || !final) { //TODO : enlever harmonized ?
     return res.status(400).send('Tous les paramètres sont requis');
   }
 
@@ -35,7 +35,7 @@ app.post('/run', (req, res) => {
     source,
     output,
     mask,
-    harmonized,
+    harmonized, //TODO : enlever harmonized ?
     final
   ];
 

@@ -53,10 +53,10 @@ async function runBatch(selectedFig) {
     const source_path = `photos/photo_${count}.png`;
     const output_path = `figurines/fig${selectedFig}.png`;
     const mask_path = `figurines/fig${selectedFig}-mask.png`;
-    const harmonized_path = `harmonized/harmonized_${count}.png`;
+    const harmonized_path = `harmonized/harmonized_${count}.png`; //TODO : enlever harmonized ?
     const final_path = `final/final_${count}.png`;
 
-    const body = { source: source_path, output: output_path, mask: mask_path, harmonized: harmonized_path, final: final_path };
+    const body = { source: source_path, output: output_path, mask: mask_path, harmonized: harmonized_path, final: final_path }; //TODO : enlever harmonized ?
     console.log(body);
 
     const runRes = await fetch('http://localhost:3000/run', {
@@ -76,7 +76,6 @@ async function runBatch(selectedFig) {
 const finalImageUrl = ref(null);
 
 function showRes(count) {
-  console.log("lets show")
   finalImageUrl.value = `backend/final/final_${count}.png`;
 }
 
