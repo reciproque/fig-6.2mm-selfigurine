@@ -8,8 +8,10 @@ import Footer from './Footer.vue'
 
 let selectedFig = 1;
 
-function select(n) {
+const begin = ref(true)
 
+function select(n) {
+  begin.value = false;
   selectedFig = n;
 
   let webcamScreen = document.querySelector(".webcam-screen");
@@ -22,7 +24,10 @@ function select(n) {
   console.log(selectedFig);
 }
 
+
+// TODO : v-if plutôt que display:none...
 function back() {
+  begin.value  = true;
   let webcamScreen = document.querySelector(".webcam-screen");
   let choiceScreen = document.querySelector(".choice-screen");
   webcamScreen.style.display = "none";
@@ -32,7 +37,9 @@ function back() {
 
 }
 
+// TODO : v-if plutôt que display:none...
 function forward(selectedFig) {
+  begin.value  = false;
   let webcamScreen = document.querySelector(".webcam-screen");
   let resScreen = document.querySelector(".res-screen");
   webcamScreen.style.display = "none";
@@ -105,7 +112,7 @@ function showRes(count) {
   </div>
   <p>Paragraphe explicatif sur l'utilisation de l'IA et le droit à l'image. <br></br>Musée Figurine de Compiègne</p>
 
-  <Footer></Footer>
+  <Footer v-if="begin"></Footer>
 
 </template>
 

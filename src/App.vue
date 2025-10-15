@@ -11,7 +11,6 @@ import ChoiceScreen from './ChoiceScreen.vue'
 
   <ChoiceScreen v-model:selectedFig="maFig"></ChoiceScreen>
 
-
 </template>
 
 <style>
@@ -35,5 +34,6 @@ body {
   z-index: 10;
   top: 0;
   left: 0;
+  width: 100vw;
 }
 </style>

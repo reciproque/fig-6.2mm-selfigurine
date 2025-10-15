@@ -4,7 +4,7 @@
     <div class="camera-wrapper">
 
       <div class="video-wrapper">
-        <camera :resolution="{ width: 1920*2, height: 1080*2 }" ref="camera" autoplay />
+        <camera :resolution="{ width:4096, height: 2160 }" ref="camera" autoplay />
       </div>
       <img src="../assets/prendre-photo.png" alt="" class="web-cam-overlay">
       <div class="timer">3</div>
@@ -57,8 +57,8 @@ export default defineComponent({
       const blob = await camera.value.snapshot();
       const img = await createImageBitmap(blob);
 
-      const targetWidth = 1080;
-      const targetHeight = 1920;
+      const targetWidth = 1215;
+      const targetHeight = 2160;
 
       const startX = Math.max(0, (img.width - targetWidth) / 2);
       const startY = Math.max(0, (img.height - targetHeight) / 2);
@@ -106,7 +106,7 @@ export default defineComponent({
 
     };
     
-    let n = 3;
+    let n = 4;
     let myInterval = setInterval(decompte, 1000);
     clearInterval(myInterval);
 
@@ -115,6 +115,8 @@ export default defineComponent({
       (document.querySelector(".back-button") as HTMLElement).style.display = "none";
 
       (document.querySelector(".timer") as HTMLElement).style.display = "block";
+
+      decompte();
       setTimeout(snapshot, 3000);
       myInterval = setInterval(decompte, 1000);
 
@@ -131,14 +133,16 @@ export default defineComponent({
 
 
     function decompte() {
-      if (n == 0) {
-        n = 3;
-        document.querySelector(".timer").innerHTML = String(3);
+      n -= 1;
+      document.querySelector(".timer").innerHTML = String(n);
+      if (n == -1) {
+        (document.querySelector(".timer") as HTMLElement).style.display = "none";
         clearInterval(myInterval);
+        n = 4;
+        document.querySelector(".timer").innerHTML = String(3);
         return
       }
-        n -= 1;
-        document.querySelector(".timer").innerHTML = String(n);
+
     }
 
 
