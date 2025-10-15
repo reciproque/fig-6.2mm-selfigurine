@@ -39,7 +39,7 @@ doit bien renvoyer ```Python 3.10.0```.
 5. Installer les dépendances Python de roop. Ouvrir un terminal dans le dossier /roop et exécuter :
 
 ```
-python -m pip install -r requirments.txt
+python -m pip install -r requirements.txt
 ```
 
 L'installation peut prendre un moment.
