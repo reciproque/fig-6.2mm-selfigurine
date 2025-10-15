@@ -102,48 +102,64 @@ export default defineComponent({
         URL.revokeObjectURL(url);
       }, "image/png");
 
-      (document.querySelector(".timer") as HTMLElement).style.display = "none";
-
     };
     
-    let n = 4;
-    let myInterval = setInterval(decompte, 1000);
+let n = 3;
+let myInterval: ReturnType<typeof setInterval>;
+
+const takePhoto = async () => {
+  n = 3;
+
+  (document.querySelector(".take-photo-button") as HTMLElement).style.display = "none";
+  (document.querySelector(".back-button") as HTMLElement).style.display = "none";
+
+  const timerEl = document.querySelector(".timer") as HTMLElement;
+  timerEl.style.display = "block";
+  timerEl.innerHTML = String(n); // Start with "3"
+
+  myInterval = setInterval(decompte, 1000);
+};
+
+function decompte() {
+  n -= 1;
+
+  const timerEl = document.querySelector(".timer") as HTMLElement;
+  timerEl.innerHTML = String(n);
+
+  if (n === 0) {
     clearInterval(myInterval);
 
-    const takePhoto = async()=> {
-      (document.querySelector(".take-photo-button") as HTMLElement).style.display = "none";
-      (document.querySelector(".back-button") as HTMLElement).style.display = "none";
+    // Let the browser render "0"
+    requestAnimationFrame(() => {
+      // Delay the snapshot slightly to ensure "0" is seen
+      setTimeout(() => {
+        snapshot(); // Now take the snapshot
 
-      (document.querySelector(".timer") as HTMLElement).style.display = "block";
-
-      decompte();
-      setTimeout(snapshot, 3000);
-      myInterval = setInterval(decompte, 1000);
-
-    }
-
-    const retakePhoto = async()=> {
-      (document.querySelector(".take-photo-button") as HTMLElement).style.display = "block";
-      (document.querySelector(".back-button") as HTMLElement).style.display = "block";
-      document.querySelector(".res-photo-image").remove();
-
-      (document.querySelector(".yes-button") as HTMLElement).style.display = "none";
-      (document.querySelector(".no-button") as HTMLElement).style.display = "none";
-    }
+        setTimeout(() => {
+          timerEl.style.display = "none";
+          timerEl.innerHTML = "3"; // Reset for next time
+        }, 300); // Optional: keep 0 visible for a brief moment
+      }, 0); // Minimal delay to ensure rendering happens first
+    });
+  }
+}
 
 
-    function decompte() {
-      n -= 1;
-      document.querySelector(".timer").innerHTML = String(n);
-      if (n == -1) {
-        (document.querySelector(".timer") as HTMLElement).style.display = "none";
-        clearInterval(myInterval);
-        n = 4;
-        document.querySelector(".timer").innerHTML = String(3);
-        return
-      }
+const retakePhoto = async () => {
+  (document.querySelector(".take-photo-button") as HTMLElement).style.display = "block";
+  (document.querySelector(".back-button") as HTMLElement).style.display = "block";
 
-    }
+  document.querySelector(".res-photo-image")?.remove();
+
+  (document.querySelector(".yes-button") as HTMLElement).style.display = "none";
+  (document.querySelector(".no-button") as HTMLElement).style.display = "none";
+
+  // Reset timer for reuse
+  const timerEl = document.querySelector(".timer") as HTMLElement;
+  timerEl.innerHTML = "3";
+  timerEl.style.display = "none";
+};
+
 
 
     return {

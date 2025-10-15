@@ -20,7 +20,7 @@ function restart() {
 </script>
 
 <template>
-    <div class="res" :style="{ display: showImage ? 'flex' : 'none' }">
+    <div class="res">
         <div v-if="!showImage" class="loader-case"><img src="../assets/loader.gif" alt="Chargement..." class="loader" />
         </div>
         <div v-else class="res-case"><img :src="finalImageUrl" alt="Aucun visage n'a été détecté. Veuillez réessayer." class="final-image" />
@@ -37,7 +37,7 @@ function restart() {
 
 <style scoped>
 .res {
-    display: none;
+    display: flex;
     height: 1920px;
     flex-direction: column;
     align-items: center;

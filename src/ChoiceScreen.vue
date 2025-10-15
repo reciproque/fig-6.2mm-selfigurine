@@ -10,40 +10,29 @@ let selectedFig = 1;
 
 const begin = ref(true)
 
+const showChoice = ref(true);
+const showWebcam = ref(false);
+const showResult = ref(false);
+
 function select(n) {
   begin.value = false;
+
+  showWebcam.value = true;
+  showChoice.value = false;
   selectedFig = n;
-
-  let webcamScreen = document.querySelector(".webcam-screen");
-  let choiceScreen = document.querySelector(".choice-screen");
-  webcamScreen.style.display = "block";
-  choiceScreen.style.display = "none";
-
-  //gsap.from(webcamScreen, {x:300, opacity:0, duration:1})
-
-  console.log(selectedFig);
 }
 
-
-// TODO : v-if plutôt que display:none...
 function back() {
   begin.value  = true;
-  let webcamScreen = document.querySelector(".webcam-screen");
-  let choiceScreen = document.querySelector(".choice-screen");
-  webcamScreen.style.display = "none";
-  choiceScreen.style.display = "block";
-
-  // gsap.from(choiceScreen, {x:-300, opacity:0, duration:1})
-
+  showWebcam.value = false;
+  showChoice.value = true;
 }
 
-// TODO : v-if plutôt que display:none...
 function forward(selectedFig) {
   begin.value  = false;
-  let webcamScreen = document.querySelector(".webcam-screen");
-  let resScreen = document.querySelector(".res-screen");
-  webcamScreen.style.display = "none";
-  resScreen.style.display = "flex";
+  showWebcam.value = false;
+  showResult.value = true;
+
   document.querySelector(".res-photo-image").remove();
 
   runBatch(selectedFig);
@@ -59,11 +48,9 @@ async function runBatch(selectedFig) {
     const count = data.count - 1;
     const source_path = `photos/photo_${count}.png`;
     const output_path = `figurines/fig${selectedFig}.png`;
-    const mask_path = `figurines/fig${selectedFig}-mask.png`;
-    const harmonized_path = `harmonized/harmonized_${count}.png`; //TODO : enlever harmonized ?
     const final_path = `final/final_${count}.png`;
 
-    const body = { source: source_path, output: output_path, mask: mask_path, harmonized: harmonized_path, final: final_path }; //TODO : enlever harmonized ?
+    const body = { source: source_path, output: output_path, final: final_path };
     console.log(body);
 
     const runRes = await fetch('http://localhost:3000/run', {
@@ -90,10 +77,10 @@ function showRes(count) {
 
 <template>
 
-  <WebcamScreen class="webcam-screen" @back-to-choice="back" @validation="() => forward(selectedFig)"></WebcamScreen>
-  <ResScreen :finalImageUrl="finalImageUrl" class="res-screen"></ResScreen>
+  <WebcamScreen v-if="showWebcam" class="webcam-screen" @back-to-choice="back" @validation="() => forward(selectedFig)"></WebcamScreen>
+  <ResScreen v-if="showResult" :finalImageUrl="finalImageUrl" class="res-screen"></ResScreen>
 
-  <div class="choice-screen">
+  <div v-if = "showChoice" class="choice-screen">
     <h1>Choix image</h1>
     <div class="grille-choix">
       <div class="choix" @click="select(1)">
@@ -109,8 +96,8 @@ function showRes(count) {
         <img src="/assets/fig4.png" alt="">
       </div>
     </div>
+    <p>Paragraphe explicatif sur l'utilisation de l'IA et le droit à l'image. <br></br>Musée Figurine de Compiègne</p>
   </div>
-  <p>Paragraphe explicatif sur l'utilisation de l'IA et le droit à l'image. <br></br>Musée Figurine de Compiègne</p>
 
   <Footer v-if="begin"></Footer>
 
@@ -151,7 +138,4 @@ p {
   cursor: pointer;
 }
 
-.webcam-screen {
-  display: none;
-}
 </style>
