@@ -3,13 +3,20 @@
 import { ref } from 'vue'
 import ChoiceScreen from './ChoiceScreen.vue'
 
-
+const uploadToFtp = async () => {
+  const res = await fetch("http://localhost:3000/upload", { method: 'POST' });
+  const data = await res.json();
+  console.log(data);
+};
 </script>
+
 
 
 <template>
 
   <ChoiceScreen v-model:selectedFig="maFig"></ChoiceScreen>
+
+  <button @click="uploadToFtp">Upload to FTP</button>
 
 </template>
 
@@ -35,5 +42,13 @@ body {
   top: 0;
   left: 0;
   width: 100vw;
+}
+
+button {
+  position: absolute;
+  z-index: 100;
+  scale: 2;
+  top: 50px;
+  left: 100px;
 }
 </style>

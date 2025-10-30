@@ -90,3 +90,61 @@ app.post('/compteur/increment', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Serveur lancé sur http://localhost:${PORT}`);
 });
+
+
+import Client from 'ftp';
+
+
+app.post('/upload', (req, res) => {
+  const c = new Client();
+  let responseSent = false;
+
+  const localFile = path.join(__dirname, 'text.txt');
+  const remoteFile = '/selfigurine/text.remote.txt';
+
+  console.log('➡️ Tentative FTP vers', localFile);
+
+  function sendResponseOnce(status, data) {
+    if (!responseSent) {
+      responseSent = true;
+      res.status(status).json(data);
+    } else {
+    }
+  }
+
+  c.on('ready', () => {
+    console.log('✅ Connexion FTP établie.');
+    c.put(localFile, remoteFile, (err) => {
+      c.end();
+
+      if (err) {
+        console.error('❌ Erreur upload FTP:', err.message);
+        return sendResponseOnce(500, { success: false, error: err.message });
+      }
+
+      console.log(`📤 Fichier ${localFile} envoyé en ${remoteFile}`);
+      sendResponseOnce(200, { success: true, message: 'Upload réussi' });
+    });
+  });
+
+  c.on('error', (err) => {
+    console.error('❌ Erreur FTP:', err.message);
+    c.end();
+    sendResponseOnce(500, { success: false, error: 'Erreur FTP: ' + err.message });
+  });
+
+  c.on('end', () => {
+    console.log('🔚 Connexion FTP fermée.');
+  });
+
+
+  c.connect({
+    host: 'selfigurine.musees-compiegne.fr',
+    user: 'reciproque@selfigurine.musees-compiegne.fr',
+    password: '!RHY99@GUL!%1j',
+    secure: true,
+    secureOptions: { rejectUnauthorized: false },
+    connTimeout: 10000,
+    pasvTimeout: 10000
+  });
+});

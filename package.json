@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "concurrently": "^9.2.1",
+    "ftp": "^0.3.10",
     "gsap": "^3.13.0",
     "http-server": "^14.1.1",
     "simple-vue-camera": "^1.1.3",
