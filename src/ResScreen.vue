@@ -1,12 +1,17 @@
 <script setup>
 import { ref, watch } from 'vue'
 
+// TODO: texts from json!! import.+ getText
+
+
 const props = defineProps({
     finalImageUrl: {
         type: String,
         default: ''
     }
 })
+
+//TODO : add language as prop
 
 const showImage = ref(false)
 
@@ -23,6 +28,7 @@ function restart() {
     <div class="res">
         <div v-if="!showImage" class="loader-case"><img src="../assets/loader.gif" alt="Chargement..." class="loader" />
         </div>
+        <!-- TODO: texts from json!! -->
         <div v-else class="res-case"><img :src="finalImageUrl" alt="Aucun visage n'a été détecté. Veuillez réessayer." class="final-image" />
             <button class="restart-button" @click="restart">X</button>
             <button class="download-button" @click="download">Télécharger</button>

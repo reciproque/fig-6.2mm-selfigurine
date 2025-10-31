@@ -16,6 +16,7 @@ const uploadToFtp = async () => {
 
   <ChoiceScreen v-model:selectedFig="maFig"></ChoiceScreen>
 
+  <!-- Test // TODO : mettre dans RESScreen ? -->
   <button @click="uploadToFtp">Upload to FTP</button>
 
 </template>

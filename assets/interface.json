@@ -1,0 +1,74 @@
+[
+  {
+    "n": 0,
+    "texte-FR": "Paragraphe explicatif sur l'utilisation de l'IA et le droit à l'image.",
+    "texte-EN": "Explanatory paragraph on the use of AI and image rights.",
+    "texte-DE": "Erläuternder Absatz zur Verwendung von KI und Bildrechten."
+  },
+  {
+    "n": 1,
+    "texte-FR": "Musée de la Figurine de Compiègne",
+    "texte-EN": "Compiègne Figurine Museum",
+    "texte-DE": "Figurenmuseum von Compiègne"
+  },
+  {
+    "n": 2,
+    "texte-FR": "Selfigurine - Bêta 1 - FR",
+    "texte-EN": "Selfigurine - Beta 1 - EN",
+    "texte-DE": "Selfigurine - Beta 1 - DE"
+  },
+  {
+    "n": 3,
+    "texte-FR": "Choix figurine",
+    "texte-EN": "Figurine selection",
+    "texte-DE": "Figurenauswahl"
+  },
+  {
+    "n": 4,
+    "texte-FR": "Et voici votre figurine",
+    "texte-EN": "And here is your figurine",
+    "texte-DE": "Und hier ist Ihre Figur."
+  },
+  {
+    "n": 5,
+    "texte-FR": "Aucun visage n'a été détecté. Veuillez réessayer.",
+    "texte-EN": "No face was detected. Please try again.",
+    "texte-DE": "Es wurde kein Gesicht erkannt. Bitte versuchen Sie es erneut."
+  },
+  {
+    "n": 6,
+    "texte-FR": "Générer le QR Code",
+    "texte-EN": "Generate the QR Code",
+    "texte-DE": "QR-Code generieren"
+  },
+  {
+    "n": 7,
+    "texte-FR": "Scannez le QR Code pour télécharger le résultat",
+    "texte-EN": "Scan the QR code to download the result",
+    "texte-DE": "Scannen Sie den QR-Code, um das Ergebnis herunterzuladen."
+  },
+  {
+    "n": 8,
+    "texte-FR": "Êtes-vous toujours là ?",
+    "texte-EN": "Are you still there?",
+    "texte-DE": "Bist du noch da?"
+  },
+  {
+    "n": 9,
+    "texte-FR": "Oui, continuer",
+    "texte-EN": "Yes, continue",
+    "texte-DE": "Ja, weiter."
+  },
+  {
+    "n": 10,
+    "texte-FR": 60,
+    "texte-EN": "-",
+    "texte-DE": "-"
+  },
+  {
+    "n": 11,
+    "texte-FR": 15,
+    "texte-EN": "-",
+    "texte-DE": "-"
+  }
+]

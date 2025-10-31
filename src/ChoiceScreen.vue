@@ -3,8 +3,30 @@
 import WebcamScreen from './WebcamScreen.vue';
 import ResScreen from './ResScreen.vue';
 import { gsap } from 'gsap';
-import { ref } from 'vue';
-import Footer from './Footer.vue'
+import { ref, onMounted } from 'vue';
+
+import texts from '../assets/interface.json'
+
+const currentLanguage = ref("FR");
+
+onMounted(() => {
+  // console.log(texts[0]["texte-FR"]);
+})
+
+function getText(n, lang) {
+  const entry = texts[n];
+  if (!entry) return '';
+
+  if (lang === "FR") return entry["texte-FR"] || '';
+  if (lang === "EN") return entry["texte-EN"] || '';
+  if (lang === "DE") return entry["texte-DE"] || '';
+
+  return '';
+}
+
+function selectLanguage(lang) {
+  currentLanguage.value = lang;
+}
 
 let selectedFig = 1;
 
@@ -81,7 +103,7 @@ function showRes(count) {
   <ResScreen v-if="showResult" :finalImageUrl="finalImageUrl" class="res-screen"></ResScreen>
 
   <div v-if = "showChoice" class="choice-screen">
-    <h1>Choix image</h1>
+    <h1>{{ getText(3, currentLanguage) }}</h1>
     <div class="grille-choix">
       <div class="choix" @click="select(1)">
         <img src="/assets/fig1.png" alt="">
@@ -96,15 +118,19 @@ function showRes(count) {
         <img src="/assets/fig4.png" alt="">
       </div>
     </div>
-    <p>Paragraphe explicatif sur l'utilisation de l'IA et le droit à l'image. <br></br>Musée Figurine de Compiègne</p>
+    <p>{{ getText(0, currentLanguage) }} <br></br>{{ getText(1, currentLanguage) }} </p>
   </div>
 
-  <Footer v-if="begin"></Footer>
+  <div r v-if="begin" class="footer">
+    <span @click="selectLanguage('FR')">FR</span> - <span @click="selectLanguage('EN')">EN</span> - <span @click="selectLanguage('DE')">DE</span><br><br>{{ getText(2, currentLanguage) }}</div>
 
 </template>
 
 
 <style scoped>
+span {
+  cursor: pointer;
+}
 h1 {
   text-align: center;
 }
@@ -136,6 +162,16 @@ p {
   height: 600px;
   object-fit: cover;
   cursor: pointer;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    background-color: white;
+    width: 100vw;
+    padding: 30px 0px;
+    text-align: center;
+    z-index: -1
 }
 
 </style>
