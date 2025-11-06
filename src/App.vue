@@ -3,11 +3,7 @@
 import { ref } from 'vue'
 import ChoiceScreen from './ChoiceScreen.vue'
 
-const uploadToFtp = async () => {
-  const res = await fetch("http://localhost:3000/upload", { method: 'POST' });
-  const data = await res.json();
-  console.log(data);
-};
+
 </script>
 
 
@@ -16,13 +12,22 @@ const uploadToFtp = async () => {
 
   <ChoiceScreen v-model:selectedFig="maFig"></ChoiceScreen>
 
-  <!-- Test // TODO : mettre dans RESScreen ? -->
-  <button @click="uploadToFtp">Upload to FTP</button>
-
 </template>
 
 <style>
+
+@font-face {
+  font-family: 'Gotham-Book';
+  src: url('/assets/Gotham-Book.otf');
+}
+
+@font-face {
+  font-family: 'Gotham-Black';
+  src: url('/assets/Gotham-Black.otf');
+}
+
 html {
+  font-family: 'Gotham-Book';
   overflow: hidden;
 }
 
@@ -46,10 +51,8 @@ body {
 }
 
 button {
-  position: absolute;
-  z-index: 100;
-  scale: 2;
-  top: 50px;
-  left: 100px;
+    font-family: 'Gotham-Book';
+
 }
+
 </style>

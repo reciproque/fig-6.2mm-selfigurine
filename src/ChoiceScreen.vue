@@ -78,7 +78,7 @@ async function runBatch(selectedFig) {
     const runRes = await fetch('http://localhost:3000/run', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body) 
     });
 
     const text = await runRes.text().then(() => showRes(count));
@@ -172,6 +172,10 @@ p {
     padding: 30px 0px;
     text-align: center;
     z-index: -1
+}
+
+.footer span {
+  cursor: pointer;
 }
 
 </style>

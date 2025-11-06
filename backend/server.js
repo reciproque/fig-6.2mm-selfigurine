@@ -99,10 +99,32 @@ app.post('/upload', (req, res) => {
   const c = new Client();
   let responseSent = false;
 
-  const localFile = path.join(__dirname, 'text.txt');
-  const remoteFile = '/selfigurine/text.remote.txt';
+  const { imagePath, imageTimestamp } = req.body;
+  const localFile = path.resolve(imagePath); 
+
+  const remoteFile =`/selfigurine/${imageTimestamp}`;
 
   console.log('➡️ Tentative FTP vers', localFile);
+  
+  const batchFile = path.join(__dirname, 'generate-qr-code.bat');
+
+  const args = [
+    imageTimestamp
+  ];
+
+  execFile(batchFile, args, { shell: true }, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Erreur batch : ${error.message}`);
+      return res.status(500).send(`Erreur : ${error.message}`);
+    }
+
+    if (stderr) {
+      console.error(`stderr : ${stderr}`);
+    }
+
+    console.log(`stdout : ${stdout}`);
+
+  });
 
   function sendResponseOnce(status, data) {
     if (!responseSent) {

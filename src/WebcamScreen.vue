@@ -9,7 +9,7 @@
       <img src="../assets/prendre-photo.png" alt="" class="web-cam-overlay">
       <div class="timer">3</div>
       <button class="take-photo-button" @click="takePhoto"></button>
-      <button class="back-button" @click="$emit('back-to-choice')"><</button>
+      <button class="back-button" @click="$emit('back-to-choice')">Retour</button>
 
       <button class="yes-button" @click="$emit('validation')">✅</button>
       <button class="no-button" @click="retakePhoto">X</button>
@@ -129,17 +129,15 @@ function decompte() {
   if (n === 0) {
     clearInterval(myInterval);
 
-    // Let the browser render "0"
     requestAnimationFrame(() => {
-      // Delay the snapshot slightly to ensure "0" is seen
       setTimeout(() => {
-        snapshot(); // Now take the snapshot
+        snapshot();
 
         setTimeout(() => {
           timerEl.style.display = "none";
-          timerEl.innerHTML = "3"; // Reset for next time
-        }, 300); // Optional: keep 0 visible for a brief moment
-      }, 0); // Minimal delay to ensure rendering happens first
+          timerEl.innerHTML = "3";
+        }, 300); 
+      }, 0); 
     });
   }
 }
@@ -154,7 +152,6 @@ const retakePhoto = async () => {
   (document.querySelector(".yes-button") as HTMLElement).style.display = "none";
   (document.querySelector(".no-button") as HTMLElement).style.display = "none";
 
-  // Reset timer for reuse
   const timerEl = document.querySelector(".timer") as HTMLElement;
   timerEl.innerHTML = "3";
   timerEl.style.display = "none";
@@ -209,18 +206,19 @@ button {
 }
 
 .back-button {
+
   position: absolute;
-  top: 4vh;
-  left: 4vw;
+  top: 50px;
+  left: 50px;
   background-color: white;
   border: 0;
-
+  box-shadow: 0px 10px 20px -7px #a5a5a5;
   font-size: 2rem;
 
   border-radius: 20px;
-  width: 80px;
+  width: fit-content;
   height: 80px;
-
+  padding: 20px;
   cursor: pointer;
 }
 
