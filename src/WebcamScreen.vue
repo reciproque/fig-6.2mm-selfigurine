@@ -6,13 +6,13 @@
       <div class="video-wrapper">
         <camera :resolution="{ width:4096, height: 2160 }" ref="camera" autoplay />
       </div>
-      <img src="../assets/prendre-photo.png" alt="" class="web-cam-overlay">
+      <img src="../assets/ellipse.png" alt="" class="web-cam-overlay">
       <div class="timer">3</div>
-      <button class="take-photo-button" @click="takePhoto"></button>
-      <button class="back-button" @click="$emit('back-to-choice')">Retour</button>
+      <button class="take-photo-button" @click="takePhoto"><img src="/assets/shoot.png" alt=""></button>
+      <button class="back-button" @click="$emit('back-to-choice')"><img src="/assets/close.png" alt="">Retour</button>
 
-      <button class="yes-button" @click="$emit('validation')">✅</button>
-      <button class="no-button" @click="retakePhoto">X</button>
+      <button class="yes-button" @click="$emit('validation')">Valider et continuer</button>
+      <button class="no-button" @click="retakePhoto"><img src="/assets/replay.png" alt="">Recommencer</button>
 
 
     </div>
@@ -87,8 +87,8 @@ export default defineComponent({
         image.src = url;
         document.querySelector("html").prepend(image);
 
-        (document.querySelector(".yes-button") as HTMLElement).style.display = "block";
-        (document.querySelector(".no-button") as HTMLElement).style.display = "block";
+        (document.querySelector(".yes-button") as HTMLElement).style.display = "flex";
+        (document.querySelector(".no-button") as HTMLElement).style.display = "flex";
 
         const count = await incrementCompteur();
 
@@ -144,8 +144,8 @@ function decompte() {
 
 
 const retakePhoto = async () => {
-  (document.querySelector(".take-photo-button") as HTMLElement).style.display = "block";
-  (document.querySelector(".back-button") as HTMLElement).style.display = "block";
+  (document.querySelector(".take-photo-button") as HTMLElement).style.display = "flex";
+  (document.querySelector(".back-button") as HTMLElement).style.display = "flex";
 
   document.querySelector(".res-photo-image")?.remove();
 
@@ -191,41 +191,49 @@ button {
 
 .take-photo-button {
   position: absolute;
-  bottom: 10vh;
-  background-color: white;
-  border: solid black 5px;
-  box-shadow: 0px 0px 0px 6px white;
-
-  font-size: 2rem;
-
-  border-radius: 50px;
-  width: 100px;
-  height: 100px;
-
+  bottom: 280px;
+  background: none;
+  border: none;
   cursor: pointer;
 }
 
 .back-button {
-
   position: absolute;
-  top: 50px;
-  left: 50px;
-  background-color: white;
+  bottom: 80px;
   border: 0;
-  box-shadow: 0px 10px 20px -7px #a5a5a5;
-  font-size: 2rem;
+  border-radius: 100px;
 
-  border-radius: 20px;
-  width: fit-content;
-  height: 80px;
-  padding: 20px;
   cursor: pointer;
+
+  width: fit-content;
+  height: 56px;
+
+  padding: 24px 32px 24px 24px ;
+
+  color: #ffc759;
+  text-transform: uppercase;
+  border: solid 1px #ffc759;
+  background-color: #0e0e0b;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 18px;
+}
+
+.back-button img {
+  height: 18px;
+  vertical-align: middle;
+  margin-right: 12px;
 }
 
 .web-cam-overlay {
+  width: 800px;
   position: absolute;
   z-index: 5;
   pointer-events: none;
+  top: 380px;
   }
 
 .timer {
@@ -239,38 +247,58 @@ button {
 
 .yes-button {
   display: none;
-
   position: absolute;
-  bottom: 10vh;
-  background-color: white;
-  border: solid black 5px;
-  box-shadow: 0px 0px 0px 6px white;
-
-  font-size: 2rem;
-
-  border-radius: 50px;
-  width: 100px;
-  height: 100px;
+  bottom: 280px;
+  border: 0;
+  border-radius: 100px;
 
   cursor: pointer;
+
+  width: fit-content;
+  height: 56px;
+
+  padding: 24px 32px 24px 24px ;
+
+  color: #0e0e0b;
+  text-transform: uppercase;
+  border: solid 1px #ffc759;
+  background-color: #ffc759;
+
+  justify-content: center;
+  align-items: center;
+
+  font-size: 18px;
 }
 
 .no-button {
-  display: none;
-
   position: absolute;
-  top: 4vh;
-  left: 4vw;
-  background-color: white;
+  bottom: 80px;
   border: 0;
-
-  font-size: 2rem;
-
-  border-radius: 20px;
-  width: 80px;
-  height: 80px;
+  border-radius: 100px;
 
   cursor: pointer;
+
+  width: fit-content;
+  height: 56px;
+
+  padding: 24px 32px 24px 24px ;
+
+  color: #ffc759;
+  text-transform: uppercase;
+  border: solid 1px #ffc759;
+  background-color: #0e0e0b;
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 18px;
+}
+
+.no-button img {
+  height: 18px;
+  vertical-align: middle;
+  margin-right: 12px;
 }
 
 

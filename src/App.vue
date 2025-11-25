@@ -15,10 +15,14 @@ import ChoiceScreen from './ChoiceScreen.vue'
 </template>
 
 <style>
-
 @font-face {
   font-family: 'Gotham-Book';
   src: url('/assets/Gotham-Book.otf');
+}
+
+@font-face {
+  font-family: 'Gotham-Bold';
+  src: url('/assets/Gotham-Bold.otf');
 }
 
 @font-face {
@@ -33,6 +37,7 @@ html {
 
 body {
   margin: 0;
+  background: #0e0e0b;
 }
 
 #video {
@@ -51,8 +56,23 @@ body {
 }
 
 button {
-    font-family: 'Gotham-Book';
-
+  font-family: 'Gotham-Book';
 }
 
+h1, h2 {
+  color: #f5f2f2;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-family: 'Gotham-Bold';
+  font-weight: 700;
+  font-size: 72px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 39px;
+}
 </style>

@@ -7,10 +7,32 @@ import { ref, onMounted } from 'vue';
 
 import texts from '../assets/interface.json'
 
+import 'vue3-carousel/carousel.css'
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+
+const images = Array.from({ length: 4 }, (_, index) => ({
+  id: index + 1,
+  url: `assets/fig${index + 1}.png`,
+}))
+
+const config = {
+  height: 1080,
+  itemsToShow: 2,
+  gap: 50,
+  // autoplay: 4000,
+  wrapAround: true,
+  pauseAutoplayOnHover: true
+}
+const carouselRef = ref()
+const currentSlide = ref(1)
+
+const next = () => carouselRef.value.next()
+const prev = () => carouselRef.value.prev()
+
 const currentLanguage = ref("FR");
 
 onMounted(() => {
-  // console.log(texts[0]["texte-FR"]);
+
 })
 
 function getText(n, lang) {
@@ -26,6 +48,9 @@ function getText(n, lang) {
 
 function selectLanguage(lang) {
   currentLanguage.value = lang;
+  document.querySelectorAll("span").forEach(element => element.classList.remove("active"));
+  document.getElementById(lang).classList.add("active");
+
 }
 
 let selectedFig = 1;
@@ -41,17 +66,17 @@ function select(n) {
 
   showWebcam.value = true;
   showChoice.value = false;
-  selectedFig = n;
+  selectedFig = (carouselRef.value.activeSlide+1);
 }
 
 function back() {
-  begin.value  = true;
+  begin.value = true;
   showWebcam.value = false;
   showChoice.value = true;
 }
 
 function forward(selectedFig) {
-  begin.value  = false;
+  begin.value = false;
   showWebcam.value = false;
   showResult.value = true;
 
@@ -62,10 +87,10 @@ function forward(selectedFig) {
 }
 
 async function runBatch(selectedFig) {
-  try {
-    const res = await fetch('http://localhost:3000/compteur/increment', {
-      method: 'POST',
-    });
+    try {
+      const res = await fetch('http://localhost:3000/compteur/increment', {
+        method: 'POST',
+      });
     const data = await res.json();
     const count = data.count - 1;
     const source_path = `photos/photo_${count}.png`;
@@ -78,7 +103,7 @@ async function runBatch(selectedFig) {
     const runRes = await fetch('http://localhost:3000/run', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body) 
+      body: JSON.stringify(body)
     });
 
     const text = await runRes.text().then(() => showRes(count));
@@ -102,43 +127,69 @@ function showRes(count) {
   <WebcamScreen v-if="showWebcam" class="webcam-screen" @back-to-choice="back" @validation="() => forward(selectedFig)"></WebcamScreen>
   <ResScreen v-if="showResult" :finalImageUrl="finalImageUrl" class="res-screen"></ResScreen>
 
-  <div v-if = "showChoice" class="choice-screen">
+
+  <div v-if="showChoice" class="choice-screen">
+
     <h1>{{ getText(3, currentLanguage) }}</h1>
-    <div class="grille-choix">
-      <div class="choix" @click="select(1)">
-        <img src="/assets/fig1.png" alt="">
-      </div>
-      <div class="choix" @click="select(2)">
-        <img src="/assets/fig2.png" alt="">
-      </div>
-      <div class="choix" @click="select(3)">
-        <img src="/assets/fig3.png" alt="">
-      </div>
-      <div class="choix" @click="select(4)">
-        <img src="/assets/fig4.png" alt="">
-      </div>
+    <h2>{{ getText(4, currentLanguage) }}</h2>
+
+    <Carousel ref="carouselRef" v-bind="config" :transition="600" transition-easing="cubic-bezier(0.4, 0, 0.2, 1)">
+      <Slide v-for="image in images" :key="image.id">
+        <img :src="image.url" alt="image" />
+      </Slide>
+    </Carousel>
+
+    <div class="nav-arrows">    
+      <button @click="prev"><img src="/assets/left.png" alt=""></button>
+      <button @click="select" class="select-fig">{{ getText(5, currentLanguage) }}</button>
+      <button @click="next"><img src="/assets/right.png" alt=""></button>
     </div>
-    <p>{{ getText(0, currentLanguage) }} <br></br>{{ getText(1, currentLanguage) }} </p>
+
   </div>
 
-  <div r v-if="begin" class="footer">
-    <span @click="selectLanguage('FR')">FR</span> - <span @click="selectLanguage('EN')">EN</span> - <span @click="selectLanguage('DE')">DE</span><br><br>{{ getText(2, currentLanguage) }}</div>
+  <div v-if="begin" class="footer">
+    <span id="FR" @click="selectLanguage('FR')" class="active">FRANÇAIS</span> | <span id="EN" @click="selectLanguage('EN')">ENGLISH</span> | <span id="DE"
+      @click="selectLanguage('DE')">DEUTSCH</span><br>
+      
+    <p>{{ getText(0, currentLanguage) }} </p>
+    
+  </div>
 
 </template>
 
 
 <style scoped>
+
+body {
+    margin: 0;
+}
+
 span {
   cursor: pointer;
+  padding: 0 10px;
 }
-h1 {
-  text-align: center;
+
+.active {
+  color: #f5f2f2;
 }
 
 p {
-  padding: 100px;
-  text-align: center;
+  color: #f5f2f2;
 }
+
+
+h1 {
+  padding-top: 160px;
+  margin: 8px;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0 32px;
+}
+
 
 .grille-choix {
   display: grid;
@@ -152,7 +203,6 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f9f9f9;
   border-radius: 12px;
   padding: 10px;
 }
@@ -165,17 +215,103 @@ p {
 }
 
 .footer {
-    position: absolute;
-    bottom: 0;
-    background-color: white;
-    width: 100vw;
-    padding: 30px 0px;
-    text-align: center;
-    z-index: -1
+
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  padding: 30px 0px;
+  text-align: center;
+  z-index: -1;
+  color: #ffc759;
+
 }
 
 .footer span {
   cursor: pointer;
 }
+
+.select-fig {
+  color: #ffc759;
+  background: none;
+  border: solid #ffc759 1px;
+  font-family: 'Gotham-Book';
+  text-transform: uppercase;
+  border-radius: 100px;
+  font-size: 24px;
+  padding: 24px 48px;
+}
+
+.carousel {
+  --vc-nav-border-radius: 100%;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+:root {
+  --carousel-transition: 300ms;
+  --carousel-opacity-inactive: 0.7;
+  --carousel-opacity-active: 1;
+  --carousel-opacity-near: 0.9;
+  
+}
+
+.carousel__slide--sliding {
+  transition:
+    opacity var(--carousel-transition),
+    transform var(--carousel-transition);
+}
+
+.carousel.is-dragging .carousel__slide {
+  transition:
+    opacity var(--carousel-transition),
+    transform var(--carousel-transition);
+}
+
+.carousel__slide {
+  opacity: var(--carousel-opacity-inactive);
+  transform: translateX(10px) rotateY(-12deg) scale(0.9);
+}
+
+.carousel__slide--prev {
+  opacity: var(--carousel-opacity-near);
+  transform: rotateY(-10deg) scale(0.80) translateY(100px);
+  opacity: 0.5;
+  pointer-events: none;
+
+}
+
+.carousel__slide--active {
+  opacity: var(--carousel-opacity-active);
+  transform: rotateY(0) scale(1);
+}
+
+.carousel__slide--next {
+  opacity: var(--carousel-opacity-near);
+  transform: rotateY(10deg) scale(0.80) translateY(100px);
+  opacity: 0.5;
+
+  pointer-events: none;
+}
+
+.carousel__slide--next~.carousel__slide {
+  opacity: var(--carousel-opacity-inactive);
+  transform: translateX(-10px) rotateY(12deg) scale(0.9);
+}
+
+.nav-arrows {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.carousel__track {
+align-items: end;
+}
+
 
 </style>

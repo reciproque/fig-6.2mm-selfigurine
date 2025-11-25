@@ -13,60 +13,78 @@
   },
   {
     "n": 2,
-    "texte-FR": "Selfigurine - Alpha 1 - 07/11/25 - FR",
-    "texte-EN": "Selfigurine - Alpha 1 - 07/11/25 - EN",
-    "texte-DE": "Selfigurine - Alpha 1 - 07/11/25 - DE"
+    "texte-FR": "Selfigurine - Bêta 1 - FR",
+    "texte-EN": "Selfigurine - Beta 1 - EN",
+    "texte-DE": "Selfigurine - Beta 1 - DE"
   },
   {
     "n": 3,
-    "texte-FR": "Choix figurine",
-    "texte-EN": "Figurine selection",
-    "texte-DE": "Figurenauswahl"
+    "texte-FR": "Selfigurine",
+    "texte-EN": "Self-figurine",
+    "texte-DE": "Selbstfigur"
   },
   {
     "n": 4,
+    "texte-FR": "Devenez une figurine",
+    "texte-EN": "Become a figurine",
+    "texte-DE": "Werde zur Figur"
+  },
+  {
+    "n": 5,
+    "texte-FR": "Sélectionner cette figurine",
+    "texte-EN": "Select this figurine",
+    "texte-DE": "Wählen Sie diese Figur aus"
+  },
+  {
+    "n": 6,
+    "texte-FR": "Retour",
+    "texte-EN": "Back",
+    "texte-DE": "Zurück"
+  },
+  {
+    "n": 7,
     "texte-FR": "Et voici votre figurine",
     "texte-EN": "And here is your figurine",
     "texte-DE": "Und hier ist Ihre Figur."
   },
   {
-    "n": 5,
+    "n": 8,
     "texte-FR": "Aucun visage n'a été détecté. Veuillez réessayer.",
     "texte-EN": "No face was detected. Please try again.",
     "texte-DE": "Es wurde kein Gesicht erkannt. Bitte versuchen Sie es erneut."
   },
   {
-    "n": 6,
+    "n": 9,
     "texte-FR": "Générer le QR Code",
     "texte-EN": "Generate the QR Code",
     "texte-DE": "QR-Code generieren"
   },
   {
-    "n": 7,
+    "n": 10,
     "texte-FR": "Scannez le QR Code pour télécharger le résultat",
     "texte-EN": "Scan the QR code to download the result",
     "texte-DE": "Scannen Sie den QR-Code, um das Ergebnis herunterzuladen."
   },
   {
-    "n": 8,
+    "n": 11,
     "texte-FR": "Êtes-vous toujours là ?",
     "texte-EN": "Are you still there?",
     "texte-DE": "Bist du noch da?"
   },
   {
-    "n": 9,
+    "n": 12,
     "texte-FR": "Oui, continuer",
     "texte-EN": "Yes, continue",
     "texte-DE": "Ja, weiter."
   },
   {
-    "n": 10,
+    "n": 13,
     "texte-FR": 60,
     "texte-EN": "-",
     "texte-DE": "-"
   },
   {
-    "n": 11,
+    "n": 14,
     "texte-FR": 15,
     "texte-EN": "-",
     "texte-DE": "-"
