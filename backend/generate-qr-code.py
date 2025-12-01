@@ -29,7 +29,7 @@ def generate_qr(url):
     )
     qr.add_data(url)
     qr.make(fit=True)
-    img = qr.make_image(fill_color="black", back_color="white").convert("RGB")
+    img = qr.make_image(fill_color="black", back_color="#ffc759").convert("RGB")
     img = img.resize((QR_SIZE_PX, QR_SIZE_PX), Image.LANCZOS)
     return img
 

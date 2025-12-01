@@ -1,92 +1,86 @@
 [
   {
     "n": 0,
-    "texte-FR": "Paragraphe explicatif sur l'utilisation de l'IA et le droit à l'image.",
-    "texte-EN": "Explanatory paragraph on the use of AI and image rights.",
-    "texte-DE": "Erläuternder Absatz zur Verwendung von KI und Bildrechten."
-  },
-  {
-    "n": 1,
-    "texte-FR": "Musée de la Figurine de Compiègne",
-    "texte-EN": "Compiègne Figurine Museum",
-    "texte-DE": "Figurenmuseum von Compiègne"
-  },
-  {
-    "n": 2,
-    "texte-FR": "Selfigurine - Bêta 1 - FR",
-    "texte-EN": "Selfigurine - Beta 1 - EN",
-    "texte-DE": "Selfigurine - Beta 1 - DE"
-  },
-  {
-    "n": 3,
     "texte-FR": "Selfigurine",
     "texte-EN": "Self-figurine",
     "texte-DE": "Selbstfigur"
   },
   {
-    "n": 4,
+    "n": 1,
     "texte-FR": "Devenez une figurine",
     "texte-EN": "Become a figurine",
     "texte-DE": "Werde zur Figur"
   },
   {
-    "n": 5,
+    "n": 2,
     "texte-FR": "Sélectionner cette figurine",
     "texte-EN": "Select this figurine",
     "texte-DE": "Wählen Sie diese Figur aus"
   },
   {
-    "n": 6,
+    "n": 3,
+    "texte-FR": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec diam efficitur, suscipit nibh vitae, vestibulum enim. Nam maximus lacus ex, vel convallis mauris lobortis eget. Nam efficitur nunc et erat finibus consectetur. Etiam et purus non ex pretium efficitur in quis nulla. Sed in nisl eu mauris ullamcorper congue faucibus ac justo. Praesent elit lacus, gravida ac luctus et, vehicula nec ante. Sed dictum arcu est, nec accumsan sapien rutrum vel. Aliquam leo justo, porttitor a vulputate ac, sollicitudin eu ex. Cras viverra scelerisque diam, vel sollicitudin metus tincidunt sed.",
+    "texte-EN": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec diam efficitur, suscipit nibh vitae, vestibulum enim. Nam maximus lacus ex, vel convallis mauris lobortis eget. Nam efficitur nunc et erat finitbus consectetur. Etiam et purus non ex pretium efficitur in quis nulla. Sed in nisl eu mauris ullamcorper congue faucibus ac justo. Praesent elit lacus, gravida ac luctus et, vehicula nec ante. Sed dictum arcu est, nec accumsan sapien rutrum vel. Aliquam leo justo, porttitor a vulputate ac, solicitudin eu ex. Cras viverra scelerisk diam, vel solicitudin metus tincidunt sed.",
+    "texte-DE": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec diam efficitur, suscipit nibh vitae, vestibulum enim. Nam maximus lacus ex, vel convallis mauris lobortis eget. Die Effizienz wurde nun erhöht und die endgültige Konsequenz erreicht. Etiam et purus nicht ex pretium efficitur in quis nulla. Sed in nisl eu mauris ullamcorper congue faucibus ac justo. Praesent elit lacus, gravida ac luctus et, vehicula nec ante. Sed dictum arcu est, nec accumsan sapien rutrum vel. Aliquam leo justo, porttitor a vulputate ac, solicitudin eu ex. Cras viverra scelerisk diam, vel solicitudin metus tincidunt sed."
+  },
+  {
+    "n": 4,
     "texte-FR": "Retour",
     "texte-EN": "Back",
     "texte-DE": "Zurück"
   },
   {
+    "n": 5,
+    "texte-FR": "Valider et continuer",
+    "texte-EN": "Confirm and continue",
+    "texte-DE": "Bestätigen und fortfahren"
+  },
+  {
+    "n": 6,
+    "texte-FR": "Reprendre",
+    "texte-EN": "To resume",
+    "texte-DE": "Um fortzufahren"
+  },
+  {
     "n": 7,
-    "texte-FR": "Et voici votre figurine",
-    "texte-EN": "And here is your figurine",
-    "texte-DE": "Und hier ist Ihre Figur."
+    "texte-FR": "Transformation en figurine...",
+    "texte-EN": "Transformation into a figurine...",
+    "texte-DE": "Verwandlung in eine Figur..."
   },
   {
     "n": 8,
-    "texte-FR": "Aucun visage n'a été détecté. Veuillez réessayer.",
-    "texte-EN": "No face was detected. Please try again.",
-    "texte-DE": "Es wurde kein Gesicht erkannt. Bitte versuchen Sie es erneut."
+    "texte-FR": "Veuillez patienter",
+    "texte-EN": "Please wait",
+    "texte-DE": "Bitte warten"
   },
   {
     "n": 9,
-    "texte-FR": "Générer le QR Code",
-    "texte-EN": "Generate the QR Code",
-    "texte-DE": "QR-Code generieren"
+    "texte-FR": "Aucun visage n'a été détecté, veuillez réessayer.",
+    "texte-EN": "No face was detected, please try again.",
+    "texte-DE": "Es wurde kein Gesicht erkannt, bitte versuchen Sie es erneut."
   },
   {
     "n": 10,
-    "texte-FR": "Scannez le QR Code pour télécharger le résultat",
-    "texte-EN": "Scan the QR code to download the result",
-    "texte-DE": "Scannen Sie den QR-Code, um das Ergebnis herunterzuladen."
+    "texte-FR": "Télécharger",
+    "texte-EN": "Download",
+    "texte-DE": "Herunterladen"
   },
   {
     "n": 11,
-    "texte-FR": "Êtes-vous toujours là ?",
-    "texte-EN": "Are you still there?",
-    "texte-DE": "Bist du noch da?"
+    "texte-FR": "Recommencer",
+    "texte-EN": "Start over",
+    "texte-DE": "Von vorn beginnen"
   },
   {
     "n": 12,
-    "texte-FR": "Oui, continuer",
-    "texte-EN": "Yes, continue",
-    "texte-DE": "Ja, weiter."
+    "texte-FR": "Pour récupérer votre figurine, veuillez scanner le QR code.",
+    "texte-EN": "To collect your figurine, please scan the QR code.",
+    "texte-DE": "Um Ihre Figur abzuholen, scannen Sie bitte den QR-Code."
   },
   {
     "n": 13,
-    "texte-FR": 60,
-    "texte-EN": "-",
-    "texte-DE": "-"
-  },
-  {
-    "n": 14,
-    "texte-FR": 15,
-    "texte-EN": "-",
-    "texte-DE": "-"
+    "texte-FR": "Chargement en cours...",
+    "texte-EN": "Loading...",
+    "texte-DE": "Laden..."
   }
 ]

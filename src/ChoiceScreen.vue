@@ -19,15 +19,15 @@ const config = {
   height: 1080,
   itemsToShow: 2,
   gap: 50,
-  // autoplay: 4000,
+  autoplay: 4000,
   wrapAround: true,
   pauseAutoplayOnHover: true
 }
 const carouselRef = ref()
 const currentSlide = ref(1)
 
-const next = () => carouselRef.value.next()
-const prev = () => carouselRef.value.prev()
+const next = () =>{carouselRef.value.next(); gsap.from(document.getElementById("next"), { scale: 0.9, duration: 0.2, ease: "bounce.out" })}
+const prev = () => {carouselRef.value.prev(); gsap.from(document.getElementById("prev"), { scale: 0.9, duration: 0.2, ease: "bounce.out" })}
 
 const currentLanguage = ref("FR");
 
@@ -63,7 +63,6 @@ const showResult = ref(false);
 
 function select(n) {
   begin.value = false;
-
   showWebcam.value = true;
   showChoice.value = false;
   selectedFig = (carouselRef.value.activeSlide+1);
@@ -124,34 +123,34 @@ function showRes(count) {
 
 <template>
 
-  <WebcamScreen v-if="showWebcam" class="webcam-screen" @back-to-choice="back" @validation="() => forward(selectedFig)"></WebcamScreen>
-  <ResScreen v-if="showResult" :finalImageUrl="finalImageUrl" class="res-screen"></ResScreen>
+  <WebcamScreen v-if="showWebcam" class="webcam-screen" @back-to-choice="back" @validation="() => forward(selectedFig)" :interface="[getText(4, currentLanguage), getText(5, currentLanguage), getText(6, currentLanguage)]"></WebcamScreen>
+  <ResScreen v-if="showResult" :finalImageUrl="finalImageUrl" class="res-screen" :interface="[getText(7, currentLanguage), getText(8, currentLanguage), getText(9, currentLanguage), getText(10, currentLanguage), getText(11, currentLanguage), getText(12, currentLanguage), getText(13, currentLanguage),]"></ResScreen>
 
 
   <div v-if="showChoice" class="choice-screen">
 
-    <h1>{{ getText(3, currentLanguage) }}</h1>
-    <h2>{{ getText(4, currentLanguage) }}</h2>
+    <h1>{{ getText(0, currentLanguage) }}</h1>
+    <h2>{{ getText(1, currentLanguage) }}</h2>
 
     <Carousel ref="carouselRef" v-bind="config" :transition="600" transition-easing="cubic-bezier(0.4, 0, 0.2, 1)">
       <Slide v-for="image in images" :key="image.id">
-        <img :src="image.url" alt="image" />
+        <img :src="image.url" @click="select"/>
       </Slide>
     </Carousel>
 
     <div class="nav-arrows">    
-      <button @click="prev"><img src="/assets/left.png" alt=""></button>
-      <button @click="select" class="select-fig">{{ getText(5, currentLanguage) }}</button>
-      <button @click="next"><img src="/assets/right.png" alt=""></button>
+      <button @click="prev" id="prev"><img src="/assets/left.png" alt=""></button>
+      <button @click="select" class="select-fig">{{ getText(2, currentLanguage) }}</button>
+      <button @click="next" id="next"><img src="/assets/right.png" alt=""></button>
     </div>
 
   </div>
 
   <div v-if="begin" class="footer">
-    <span id="FR" @click="selectLanguage('FR')" class="active">FRANÇAIS</span> | <span id="EN" @click="selectLanguage('EN')">ENGLISH</span> | <span id="DE"
+      <span id="EN" @click="selectLanguage('EN')">ENGLISH</span> | <span id="FR" @click="selectLanguage('FR')" class="active">FRANÇAIS</span> | <span id="DE"
       @click="selectLanguage('DE')">DEUTSCH</span><br>
       
-    <p>{{ getText(0, currentLanguage) }} </p>
+    <p>{{ getText(3, currentLanguage) }} </p>
     
   </div>
 
@@ -174,6 +173,9 @@ span {
 }
 
 p {
+  font-size: 12px;
+  padding: 0 100px;
+  text-align:justify;
   color: #f5f2f2;
 }
 
@@ -287,6 +289,7 @@ img {
 .carousel__slide--active {
   opacity: var(--carousel-opacity-active);
   transform: rotateY(0) scale(1);
+  cursor: pointer;
 }
 
 .carousel__slide--next {
@@ -310,7 +313,7 @@ img {
 }
 
 .carousel__track {
-align-items: end;
+  align-items: end;
 }
 
 

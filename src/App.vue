@@ -1,8 +1,6 @@
 <script setup>
 
-import { ref } from 'vue'
 import ChoiceScreen from './ChoiceScreen.vue'
-
 
 </script>
 
@@ -45,7 +43,6 @@ body {
   width: auto !important;
   transform: scaleX(-1);
 }
-
 
 .res-photo-image {
   position: absolute;
