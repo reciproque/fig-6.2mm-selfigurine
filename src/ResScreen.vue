@@ -59,22 +59,22 @@ const uploadToFtp = async () => {
         </div>
 
         <div class="res-final" v-else>
-            <img :src="finalImageUrl" :alt="interface[2]" class="final-image" />
-            <button class="download-button" @click="uploadToFtp" :disabled='!canGenerateQRCode'>{{ canGenerateQRCode ? interface[3] :  interface[4] }} <img
+
+            <h3 class="h-error">{{ interface[2] }}<br>{{ interface[3] }}</h3>
+            <img onerror="this.style.display='none'; document.querySelector('.h-error').style.display='block'; document.querySelector('.download-button').style.display='none'" :src="finalImageUrl" class="final-image" />
+
+            <button class="download-button" @click="uploadToFtp" :disabled='!canGenerateQRCode'>{{ interface[4] }} <img
                     src="../assets/download.png" alt=""></button>
             <button class="restart-button" @click="restart"><img src="/assets/close.png"
-                    alt="">{{ interface[4] }}</button>
+                    alt="">{{ interface[5] }}</button>
 
             <div v-if="!canGenerateQRCode" class="qr-wrapper">
-                <span>{{ interface[5] }}</span>
+                <span>{{ interface[6] }}</span>
                 <img :src="'../backend/qrcodes/' + timestampRef + '.png'" alt=""
                     class="qr-code">
             </div>
 
-
-
         </div>
-
 
     </div>
 </template>
@@ -88,12 +88,18 @@ h3 {
     text-transform: uppercase;
 }
 
+.h-error {
+    display: none;
+    line-height: 50px;
+}
+
 .res {
     display: flex;
     height: 1920px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    color: #fff;
 }
 
 
@@ -244,6 +250,7 @@ h3 {
     padding: 40px 80px;
     bottom: 205px;
     gap: 25px;
+    color: #0e0e0b;
 
 }
 

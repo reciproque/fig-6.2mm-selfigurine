@@ -4,8 +4,6 @@ import ChoiceScreen from './ChoiceScreen.vue'
 
 </script>
 
-
-
 <template>
 
   <ChoiceScreen v-model:selectedFig="maFig"></ChoiceScreen>

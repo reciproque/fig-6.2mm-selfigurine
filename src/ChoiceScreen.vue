@@ -2,6 +2,8 @@
 
 import WebcamScreen from './WebcamScreen.vue';
 import ResScreen from './ResScreen.vue';
+import TimeoutModal from './TimeoutModal.vue'
+
 import { gsap } from 'gsap';
 import { ref, onMounted } from 'vue';
 
@@ -26,8 +28,8 @@ const config = {
 const carouselRef = ref()
 const currentSlide = ref(1)
 
-const next = () =>{carouselRef.value.next(); gsap.from(document.getElementById("next"), { scale: 0.9, duration: 0.2, ease: "bounce.out" })}
-const prev = () => {carouselRef.value.prev(); gsap.from(document.getElementById("prev"), { scale: 0.9, duration: 0.2, ease: "bounce.out" })}
+const next = () =>{carouselRef.value.next(); clickOnVoile(); gsap.from(document.getElementById("next"), { scale: 0.9, duration: 0.2, ease: "bounce.out" })}
+const prev = () => {carouselRef.value.prev(); clickOnVoile(); gsap.from(document.getElementById("prev"), { scale: 0.9, duration: 0.2, ease: "bounce.out" })}
 
 const currentLanguage = ref("FR");
 
@@ -50,7 +52,7 @@ function selectLanguage(lang) {
   currentLanguage.value = lang;
   document.querySelectorAll("span").forEach(element => element.classList.remove("active"));
   document.getElementById(lang).classList.add("active");
-
+  clickOnVoile() ;
 }
 
 let selectedFig = 1;
@@ -62,6 +64,8 @@ const showWebcam = ref(false);
 const showResult = ref(false);
 
 function select(n) {
+  stillHere();
+  clickOnVoile() ;
   begin.value = false;
   showWebcam.value = true;
   showChoice.value = false;
@@ -69,12 +73,16 @@ function select(n) {
 }
 
 function back() {
+  stillHere();
+  clickOnVoile() ;
   begin.value = true;
   showWebcam.value = false;
   showChoice.value = true;
 }
 
 function forward(selectedFig) {
+  stillHere();
+  clickOnVoile() ;
   begin.value = false;
   showWebcam.value = false;
   showResult.value = true;
@@ -107,6 +115,7 @@ async function runBatch(selectedFig) {
 
     const text = await runRes.text().then(() => showRes(count));
     console.log('Batch exécuté :', text);
+    stillHere();
 
   } catch (err) {
     console.error('Erreur dans runBatch:', err);
@@ -119,12 +128,40 @@ function showRes(count) {
   finalImageUrl.value = `backend/final/final_${count}.png`;
 }
 
+const isInactive = ref(false);
+let TO1 = setTimeout(()=>{isInactive.value=true}, getText(17, currentLanguage.value)*1000);
+
+const showVoile = ref(true);
+let TOvoile = setTimeout(()=>{showVoile.value=true}, getText(19, currentLanguage.value)*1000);
+
+function stillHere() {
+  isInactive.value = false;
+  clearTimeout(TO1);
+  TO1 = setTimeout(()=>{isInactive.value=true}, getText(17, currentLanguage.value)*1000);
+}
+
+function clickOnVoile() {
+  showVoile.value = false;
+  clearTimeout(TOvoile);
+  TOvoile = setTimeout(()=>{showVoile.value=true}, getText(19, currentLanguage.value)*1000);
+}
+
 </script>
 
 <template>
+  <TimeoutModal v-if="isInactive & !showChoice" class="modale" 
+    @click="stillHere"
 
+    :interface="[getText(15, currentLanguage), getText(16, currentLanguage), getText(20, currentLanguage)]" 
+    :timer2="getText(18, currentLanguage)"/>
+
+  <div class="voile" @mousedown="clickOnVoile" v-if="showChoice && showVoile">
+    <img src="/assets/main.png" alt="">
+
+  </div>
   <WebcamScreen v-if="showWebcam" class="webcam-screen" @back-to-choice="back" @validation="() => forward(selectedFig)" :interface="[getText(4, currentLanguage), getText(5, currentLanguage), getText(6, currentLanguage)]"></WebcamScreen>
-  <ResScreen v-if="showResult" :finalImageUrl="finalImageUrl" class="res-screen" :interface="[getText(7, currentLanguage), getText(8, currentLanguage), getText(9, currentLanguage), getText(10, currentLanguage), getText(11, currentLanguage), getText(12, currentLanguage), getText(13, currentLanguage),]"></ResScreen>
+  <ResScreen v-if="showResult" :finalImageUrl="finalImageUrl" class="res-screen" :interface="[getText(7, currentLanguage), getText(8, currentLanguage), getText(9, currentLanguage), getText(10, currentLanguage), getText(11, currentLanguage), getText(12, currentLanguage), getText(13, currentLanguage),getText(14, currentLanguage)]"></ResScreen>
+  
 
 
   <div v-if="showChoice" class="choice-screen">
@@ -133,8 +170,8 @@ function showRes(count) {
     <h2>{{ getText(1, currentLanguage) }}</h2>
 
     <Carousel ref="carouselRef" v-bind="config" :transition="600" transition-easing="cubic-bezier(0.4, 0, 0.2, 1)">
-      <Slide v-for="image in images" :key="image.id">
-        <img :src="image.url" @click="select"/>
+      <Slide   @click="clickOnVoile" v-for="image in images" :key="image.id">
+        <img :src="image.url" @click="select" />
       </Slide>
     </Carousel>
 
@@ -146,11 +183,11 @@ function showRes(count) {
 
   </div>
 
-  <div v-if="begin" class="footer">
+  <div v-if="begin" class="footer" >
       <span id="EN" @click="selectLanguage('EN')">ENGLISH</span> | <span id="FR" @click="selectLanguage('FR')" class="active">FRANÇAIS</span> | <span id="DE"
       @click="selectLanguage('DE')">DEUTSCH</span><br>
       
-    <p>{{ getText(3, currentLanguage) }} </p>
+    <!-- <p>{{ getText(3, currentLanguage) }} </p> -->
     
   </div>
 
@@ -192,7 +229,6 @@ button {
   padding: 0 32px;
 }
 
-
 .grille-choix {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -217,15 +253,14 @@ button {
 }
 
 .footer {
-
   position: absolute;
-  bottom: 0;
+  bottom: 100px;
   width: 100vw;
   padding: 30px 0px;
   text-align: center;
   z-index: -1;
   color: #ffc759;
-
+  font-size: 25px;
 }
 
 .footer span {
@@ -309,12 +344,44 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .carousel__track {
   align-items: end;
 }
 
+.modale {
+  z-index: 10000;
+  position: absolute;
+}
 
+
+.voile {
+  cursor: pointer;
+  position: absolute;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0e0e0b9c;
+}
+
+.voile img {
+  width: 600px;
+  position: absolute;
+  right: 0px;
+  bottom: -700px;
+  animation: main 5s infinite;
+}
+
+@keyframes main {
+  0% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
 </style>
