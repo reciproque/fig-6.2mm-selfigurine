@@ -23,7 +23,8 @@ const config = {
   gap: 50,
   autoplay: 4000,
   wrapAround: true,
-  pauseAutoplayOnHover: true
+  transition: 500,
+  transitionEasing: "ease"
 }
 const carouselRef = ref()
 const currentSlide = ref(1)
@@ -169,8 +170,8 @@ function clickOnVoile() {
     <h1>{{ getText(0, currentLanguage) }}</h1>
     <h2>{{ getText(1, currentLanguage) }}</h2>
 
-    <Carousel ref="carouselRef" v-bind="config" :transition="600" transition-easing="cubic-bezier(0.4, 0, 0.2, 1)">
-      <Slide   @click="clickOnVoile" v-for="image in images" :key="image.id">
+    <Carousel ref="carouselRef" v-bind="config" >
+      <Slide  @click="clickOnVoile" v-for="image in images" :key="image.id">
         <img :src="image.url" @click="select" />
       </Slide>
     </Carousel>
@@ -288,33 +289,25 @@ img {
   object-fit: contain;
 }
 
-:root {
-  --carousel-transition: 300ms;
-  --carousel-opacity-inactive: 0.7;
-  --carousel-opacity-active: 1;
-  --carousel-opacity-near: 0.9;
-  
-}
-
 .carousel__slide--sliding {
   transition:
-    opacity var(--carousel-transition),
-    transform var(--carousel-transition);
+    opacity 300ms,
+    transform 300ms;
 }
 
 .carousel.is-dragging .carousel__slide {
   transition:
-    opacity var(--carousel-transition),
-    transform var(--carousel-transition);
+    opacity 300ms,
+    transform 300ms;
 }
 
 .carousel__slide {
-  opacity: var(--carousel-opacity-inactive);
+  opacity: 0.7;
   transform: translateX(10px) rotateY(-12deg) scale(0.9);
 }
 
 .carousel__slide--prev {
-  opacity: var(--carousel-opacity-near);
+  opacity: 0.9;
   transform: rotateY(-10deg) scale(0.80) translateY(100px);
   opacity: 0.5;
   pointer-events: none;
@@ -322,13 +315,13 @@ img {
 }
 
 .carousel__slide--active {
-  opacity: var(--carousel-opacity-active);
+  opacity: 1;
   transform: rotateY(0) scale(1);
   cursor: pointer;
 }
 
 .carousel__slide--next {
-  opacity: var(--carousel-opacity-near);
+  opacity: 1;
   transform: rotateY(10deg) scale(0.80) translateY(100px);
   opacity: 0.5;
 
@@ -336,7 +329,7 @@ img {
 }
 
 .carousel__slide--next~.carousel__slide {
-  opacity: var(--carousel-opacity-inactive);
+  opacity: 0.7;
   transform: translateX(-10px) rotateY(12deg) scale(0.9);
 }
 
@@ -355,7 +348,6 @@ img {
   position: absolute;
 }
 
-
 .voile {
   cursor: pointer;
   position: absolute;
@@ -366,11 +358,12 @@ img {
 }
 
 .voile img {
-  width: 600px;
+  width: 400px;
   position: absolute;
-  right: 0px;
-  bottom: -700px;
+  right: 50px;
+  bottom: -720px;
   animation: main 5s infinite;
+  filter: invert();
 }
 
 @keyframes main {
