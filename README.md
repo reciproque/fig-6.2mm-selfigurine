@@ -61,7 +61,12 @@ L'installation de toutes les dépendances peut prendre un certain temps.
 
 9. Installer les dépendances Python du backend. Ouvrir un terminal dans le dossier /backend et exécuter :
 
-10. **Paramétrage du navigateur** :
+
+```
+python -m pip install -r requirements.txt
+```
+
+11. **Paramétrage du navigateur** :
    - Sélectionner le dossier backend/photos comme dossier d'enregistrement par défaut des fichiers. Décocher également l'option "Toujours demander où enregistrer les fichiers".
    - Vérifier par ailleurs que le dossier backend/photos est vide et que le fichier `photo-count.txt` contient `0`.
    - La première fois : autoriser l'utilisation de la webcam par le navigateur. Sélectionner la Logitech BRIO. Cocher l'option "Se souvenir de mon choix".
