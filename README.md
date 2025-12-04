@@ -89,3 +89,24 @@ NB : cette commande équivaut à lancer le frontend et le backend de manière si
 3. Pour terminer les deux serveurs, dans le terminal : CTRL + C  2 fois de suite (ou CTRL + C puis "O")
 
 4. Fermer ensuite le navigateur.
+
+
+## Lancement automatique
+Les raccourcis  Selfigurine - 1 - Serveur (start-selfigurine-serv.bat) puis le raccourci Selfigurine - 2 - Application (start-selfigurine-app.bat) permettent de lancer l'application sans passer par un terminal.
+
+start-selfigurine-serv.bat et start-selfigurine-app.bat sont appelées au démarrage de Windows grâce au planificateur de tâches. 
+
+**start-selfigurine-serv.bat :**
+lance le serveur en arrière-plan
+
+**start-selfigurine-app.bat :**
+lance l’application http://localhost:5173/ dans un navigateur Chrome plein écran + mode kiosque ;
+désactive l’explorateur Windows afin que les visiteurs ne puissent pas quitter l’application.
+
+**Pour quitter :**
+Brancher un clavier
+CTRL+ALT+SUPPR > Gestionnaire des tâches
+Fichier > Exécuter une nouvelle tâche > “explorer.exe”
+Quitter Chrome (app)
+Quitter les consoles (serv)
+
