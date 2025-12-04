@@ -1,5 +1,5 @@
 <?php
-$dir = __DIR__ . "/images";
+$dir = __DIR__ . "/selfigurine";
 
 $files = glob("$dir/*");
 
