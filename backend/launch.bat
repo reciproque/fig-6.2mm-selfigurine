@@ -33,4 +33,14 @@ if %errorlevel% neq 0 (
     exit /b %errorlevel%
 )
 
+REM ---- Deuxième FINAL avec overlay ----
+set OUTPUT_LOGO=%FINAL:~0,-4%-overlay.png
+
+python "%~dp0add-overlay.py" "%~dp0%FINAL%" "%~dp0overlay.png" "%~dp0%OUTPUT_LOGO%"
+
+if %errorlevel% neq 0 (
+    echo Overlay creation failed.
+    exit /b %errorlevel%
+)
+
 echo All done.

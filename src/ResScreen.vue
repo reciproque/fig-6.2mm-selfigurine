@@ -18,7 +18,7 @@ const canGenerateQRCode = ref(true);
 
 watch(() => props.finalImageUrl, (newVal) => {
     showImage.value = !!newVal
-    path.value = props.finalImageUrl;
+    path.value = props.finalImageUrl.replace(".png", "-overlay.png");
     const now = new Date();
     const pad = (n) => n.toString().padStart(2, '0');
     const timestamp = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
@@ -148,9 +148,8 @@ h3 {
 .final-image {
     max-width: 800px;
     max-height: 1720px;
-    margin-bottom: 260px;
+    margin-bottom: 350px;
     border-radius: 24px;
-
 }
 
 .res-final {
@@ -246,9 +245,9 @@ h3 {
     align-items: center;
     background-color: #ffc759;
     width: 640px;
-    border-radius: 0  0  24px 24px;
+    border-radius: 24px;
     padding: 40px 80px;
-    bottom: 205px;
+    bottom: 160px;
     gap: 25px;
     color: #0e0e0b;
 

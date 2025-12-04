@@ -132,7 +132,7 @@ function showRes(count) {
 const isInactive = ref(false);
 let TO1 = setTimeout(()=>{isInactive.value=true}, getText(17, currentLanguage.value)*1000);
 
-const showVoile = ref(true);
+const showVoile = ref(false);
 let TOvoile = setTimeout(()=>{showVoile.value=true}, getText(19, currentLanguage.value)*1000);
 
 function stillHere() {
