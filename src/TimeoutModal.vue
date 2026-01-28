@@ -105,8 +105,8 @@ onBeforeUnmount(() => {
     background-color: #000000af;
     position: absolute;
     z-index: 10000;
-    width: 1080px;
-    height: 1920px;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
