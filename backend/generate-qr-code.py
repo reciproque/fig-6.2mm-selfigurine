@@ -38,7 +38,7 @@ def clean_filename(name):
 
 
 name = args.filename
-url = "https://selfigurine.musees-compiegne.fr/selfigurine/"+args.filename
+url = "https://selfigurine.musees-compiegne.fr/selfigurine/"+args.filename+".png"
 qr_img = generate_qr(url)
 filename = f"{name}.png"
 qr_img.save("qrcodes/"+filename)

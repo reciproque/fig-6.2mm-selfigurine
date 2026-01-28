@@ -102,7 +102,7 @@ app.post('/upload', (req, res) => {
   const { imagePath, imageTimestamp } = req.body;
   const localFile = path.resolve(imagePath); 
 
-  const remoteFile =`/selfigurine/${imageTimestamp}`;
+  const remoteFile =`/selfigurine/${imageTimestamp}.png`;
 
   console.log('➡️ Tentative FTP vers', localFile);
   
