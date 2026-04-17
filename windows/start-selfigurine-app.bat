@@ -1,7 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-set "DISPOSITIF=%~1"
 set "URL=http://localhost:5173/"
 
 taskkill /im explorer.exe /f
