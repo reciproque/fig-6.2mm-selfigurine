@@ -3,7 +3,7 @@ setlocal EnableDelayedExpansion
 
 set "URL=http://localhost:5173/"
 
-taskkill /im explorer.exe /f
+@REM taskkill /im explorer.exe /f
 
 net start "TabletInputService"
 
