@@ -14,9 +14,19 @@ if not exist "%~1" (
     exit /b 1
 )
 
-echo Suppression des fichiers et sous-dossiers dans "%~1"...
-rmdir /s /q "%~1" 2>nul
-mkdir "%~1" 2>nul
+:: Supprimer uniquement les fichiers JPG et PNG
+echo Suppression des fichiers JPG et PNG dans "%~1"...
+del /q "%~1\*.jpg" 2>nul
+del /q "%~1\*.png" 2>nul
 
-echo Dossier "%~1" vidé avec succès.
+:: Vérifier si photo-count.txt existe
+if exist "%~1\photo-count.txt" (
+    :: Éditer le fichier photo-count.txt pour mettre "0"
+    echo 0 > "%~1\photo-count.txt"
+    echo Fichier photo-count.txt mis à jour avec "0".
+) else (
+    echo Avertissement : Le fichier photo-count.txt n'existe pas dans "%~1".
+)
+
+echo Suppression des fichiers JPG et PNG terminée.
 pause
