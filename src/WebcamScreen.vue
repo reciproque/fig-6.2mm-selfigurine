@@ -6,7 +6,6 @@
       <div class="video-wrapper">
         <camera :resolution="{ width:4096, height: 2160 }" ref="camera" autoplay />
       </div>
-      <img src="../assets/ellipse.png" alt="" class="web-cam-overlay">
       <div class="timer">3</div>
       <button class="take-photo-button" @click="takePhoto"><img src="/assets/shoot.png" alt=""></button>
       <button class="back-button" @click="$emit('back-to-choice')"><img src="/assets/close.png" alt="">{{ interface[0] }}</button>
